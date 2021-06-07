@@ -1,5 +1,8 @@
 # wanderer
+
 김도형
+
+아무거나 또친다!! -수임-
 
 * ## Project
     * <details>
