@@ -112,6 +112,11 @@
       git checkout -b 브랜치명
       ```
 
+      branch 이동하기
+      ```
+      git checkout 브랜치명
+      ```
+
       자신의 branch 에 커밋하기
       ```
       git add .
@@ -119,10 +124,14 @@
       git push origin 브린치명
       ```
       
-      자신의 branch를 master에 병합 요청
-      ```
+      자신의 branch를 master에 병합 요청하기 (pull request)   
+      저희 project repository 웹사이트에서   
+      본인의 branch로 들어가신 다음   
+      Pull request 버튼을 눌러주세요.    
+      마지막으로 제목과 메시지를 넣어주시고   
+      create pull request를 눌러주시면 됩니다.   
+    
       
-      ```
       </details>
 
 
