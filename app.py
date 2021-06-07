@@ -44,10 +44,11 @@ def token_required(func):
 
 @app.route('/')
 def home():
-    if not session.get('logged_in'):
-        return render_template('login.html')
-    else:
-        return 'logged in currently'
+    # if not session.get('logged_in'):
+    #     return render_template('login.html')
+    # else:
+    #     return 'logged in currently'
+    return render_template('index.html')
 
 # Just to show you that a public route is available for everyone
 

@@ -1,5 +1,5 @@
 # wanderer
-본인 수정
+김도형
 
 * ## Project
     * <details>
