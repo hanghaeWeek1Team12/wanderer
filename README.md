@@ -63,7 +63,7 @@
 
         * /placelist
             * method = get
-            * request = {email=""}
+            * request = {jwt=JWT}
             * response = {res=True, msg="", val=[{imgsrc="url", likeCount=3, liked=True, placeName="한라산", location="서울시 영등포구 ..."},{...},{...}]}
             * 기능 = front에 모든 장소를 표기, array val로 받음
 
@@ -75,7 +75,7 @@
 
         * /like
             * method = post
-            * request = {placeName="한라산", email=""}
+            * request = {placeName="한라산", jwt=JWT}
             * response = {res=True, msg="좋아요가 완료되었습니다." val=""}
             * 기능 = place 데이터베이스에 해당 이메일이 존재한다면 like를 하고 존재하지 않는다면 unlike를 한다. 로그인된 아이디로 장소를 좋아요/좋아요 취소 한다.
 
@@ -88,7 +88,7 @@
       * 여행지 데이터 직접 입력 or scraping   
 
       * Jinja2에 대한 연구    
-      
+
         jinja2는 flask에서 html에 변수를 보내주어 사용할 수 있는 plugin입니다.   
         <br>
 
@@ -123,11 +123,11 @@
 
         html for 문
         ```
-        <ul>
-        {% for x in range(10) %}
-        <li>{{ x }}</li>
-        {% endfor%}
-        </ul>
+        {% for row in rows %}
+        {% set gu_name = row.MSRSTE_NM %}
+        {% set gu_mise = row.IDEX_MVL %}
+        <li>{{ gu_name }}: {{ gu_mise }}</li>
+        {% endfor %}
         ```
         <br>
 
@@ -143,9 +143,9 @@
 
 
 
-      * JWT에 대한 연구   
+      * [JWT에 대한 연구](https://www.youtube.com/watch?v=e-_tsR0hVLQ&t=130s)   
 
-      * responsive grid에 대한 연구   
+      * [responsive grid에 대한 연구](https://codepen.io/astrotim/pen/WQwqbW)
 
       </details>
       <br>
