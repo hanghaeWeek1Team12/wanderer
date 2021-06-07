@@ -102,7 +102,27 @@
       <summary>git</summary>
       <br>
 
+      깃헙에는 branch 라는 개념이 있습니다.   
+      각자 수정하신 내용을 따로 commit(업로드) 하는 곳이 branch 입니다.   
+      Branch 를 원래 master branch에 업로드 하고 싶으시다면   
+      pull request를 해야 합니다.   
+
+      branch 생성하기
+      ```
+      git checkout -b 브랜치명
+      ```
+
+      자신의 branch 에 커밋하기
+      ```
+      git add .
+      git commit -m "html 그리드를 수정"
+      git push origin 브린치명
+      ```
       
+      자신의 branch를 master에 병합 요청
+      ```
+      
+      ```
       </details>
 
 
