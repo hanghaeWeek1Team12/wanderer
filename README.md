@@ -1,5 +1,5 @@
 # wanderer
-
+아무거나 친다 ! 
 
 * ## API 설계
     * /login   
