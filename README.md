@@ -85,13 +85,67 @@
       <summary>기능적 요구</summary>
       <br>
 
-      여행지 데이터 직접 입력 or scraping   
+      * 여행지 데이터 직접 입력 or scraping   
 
-      Jinja2에 대한 연구   
+      * Jinja2에 대한 연구    
+      
+        jinja2는 flask에서 html에 변수를 보내주어 사용할 수 있는 plugin입니다.   
+        <br>
 
-      JWT에 대한 연구   
+        파이선 서버에서 변수 보내주기 
+        ```python
+        return render_template("index.html", var = giveVar)
+        ```
+        <br>
 
-      responsive grid에 대한 연구   
+        html 변수표시는 `{var}` 코드는 `{{code}}`로 한다.   
+        <br>
+
+        html if 문
+        ```html
+        {% if template_variable == "Hello" %}
+        <p>{{ template_variable }}, World!</p> 
+        {% endif %}
+        ```
+        <br>
+
+        html if, else if, else 문
+        ```html
+        {% if template_variable < 20 %}
+        <p>{{ template_variable }}은 20보다 작다.</p> 
+        {% elif template_variable > 20 %}
+        <p>{{ template_variable }}은 20보다 크다.</p> 
+        {% else %}
+        <p>{{ template_variable }}은 20이다.</p> 
+        {% endif %}
+        ```
+        <br>
+
+        html for 문
+        ```
+        <ul>
+        {% for x in range(10) %}
+        <li>{{ x }}</li>
+        {% endfor%}
+        </ul>
+        ```
+        <br>
+
+        dictionary for 문
+        ```
+        <ul>
+        {% for key, value in template_dict.items() %}
+        <li>{{ key }} : {{ value }}</li>
+        {% endfor%}
+        </ul>
+        ```
+        <br>
+
+
+
+      * JWT에 대한 연구   
+
+      * responsive grid에 대한 연구   
 
       </details>
       <br>
