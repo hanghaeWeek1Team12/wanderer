@@ -1,6 +1,6 @@
 # wanderer
 아무거나 또친다!! -수임-
-또또 쳐본다! -수임2-
+또또 쳐본다! -수임2
 * ## Project
     * <details>
       <summary>설명</summary>
