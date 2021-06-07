@@ -1,5 +1,18 @@
 # wanderer
 
+* ## Project
+    * <details>
+      <summary>설명</summary>
+      <br>
+
+      간단한 여행지 좋아요 사이트입니다.   
+      정해진 여행지 목록에서 좋아요를 누르고   
+      다른 사람들은 얼마나 좋아하는지 알아볼 수 있습니다.   
+      
+      
+      </details>
+      <br>
+
 * ## Frontend
     * <details>
       <summary>Wireframe</summary>
@@ -44,6 +57,7 @@
         * /signup
             * method = post
             * request = {email="", password="", nickname=""}
+
             * response = {res=True, msg="회원가입 되었습니다.", val=JWT}
             * 기능 = 이메일/닉네임 중복확인, 회원가입
 
@@ -76,13 +90,28 @@
       Jinja2에 대한 연구   
 
       JWT에 대한 연구   
-      
+
+      responsive grid에 대한 연구   
+
       </details>
       <br>
 
  
+* ## 협업
+    * <details>
+      <summary>git</summary>
+      <br>
+
+      
+      </details>
 
 
+<br>
+<br>
+
+드랍다운 예시
+```
+<br>
 <details>
 <summary>드랍다운</summary>
 <br>
@@ -90,3 +119,4 @@
 드랍다운 내용
 </details>
 <br>
+```
