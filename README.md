@@ -1,44 +1,92 @@
 # wanderer
 
+* ## Frontend
+    * <details>
+      <summary>Wireframe</summary>
+      <br>
 
-* ## API 설계
-    * /login   
-        * method = post
-        * request = {email="", password=""}
-        * response = {res=True, msg="로그인 되었습니다.", val=JWT}
-        * 기능 = 비밀번호, 이메일 확인, 로그인
+      로그인 페이지   
 
-    * /logout
-        * method = post
-        * jwt를 연구하고 구현 or 프런트에서 해결
-        * 기능 = 로그아웃
+      ![](img/login_template.png)
 
-    * /signup
-        * method = post
-        * request = {email="", password="", nickname=""}
-        * response = {res=True, msg="회원가입 되었습니다.", val=JWT}
-        * 기능 = 이메일/닉네임 중복확인, 회원가입
+      회원가입 페이지   
 
-    * /placelist
-        * method = get
-        * request = {email=""}
-        * response = {res=True, msg="", val=[{imgsrc="url", likeCount=3, liked=True, placeName="한라산", location="서울시 영등포구 ..."},{...},{...}]}
-        * 기능 = front에 모든 장소를 표기, array val로 받음
+      ![](img/register_template.png)
 
-    * /upload
-        * method = post
-        * request = {imgsrc="", placeName = "", loaction = ""}
-        * response = {res=True, msg="", val=""}
-        * 기능 = 장소를 업로드한다.
+      업로드 페이지   
 
-    * /like
-        * method = post
-        * request = {placeName="한라산", email=""}
-        * response = {res=True, msg="좋아요가 완료되었습니다." val=""}
-        * 기능 = place 데이터베이스에 해당 이메일이 존재한다면 like를 하고 존재하지 않는다면 unlike를 한다. 로그인된 아이디로 장소를 좋아요/좋아요 취소 한다.
+      ![](img/upload_template.png)
 
+      메인 페이지   
+
+      ![](img/main_template.png)
+      </details>
+      <br>
     
 
-* ### 그외 필요한 것    
-    * 여행지 데이터 직접 입력 or scraping
+
+* ## Backend
+    * <details>
+      <summary>API 설계</summary>
+        <br>
+
+        * /login   
+            * method = post
+            * request = {email="", password=""}
+            * response = {res=True, msg="로그인 되었습니다.", val=JWT}
+            * 기능 = 비밀번호, 이메일 확인, 로그인
+
+        * /logout
+            * method = post
+            * jwt를 연구하고 구현 or 프런트에서 해결
+            * 기능 = 로그아웃
+
+        * /signup
+            * method = post
+            * request = {email="", password="", nickname=""}
+            * response = {res=True, msg="회원가입 되었습니다.", val=JWT}
+            * 기능 = 이메일/닉네임 중복확인, 회원가입
+
+        * /placelist
+            * method = get
+            * request = {email=""}
+            * response = {res=True, msg="", val=[{imgsrc="url", likeCount=3, liked=True, placeName="한라산", location="서울시 영등포구 ..."},{...},{...}]}
+            * 기능 = front에 모든 장소를 표기, array val로 받음
+
+        * /upload
+            * method = post
+            * request = {imgsrc="", placeName = "", loaction = ""}
+            * response = {res=True, msg="", val=""}
+            * 기능 = 장소를 업로드한다.
+
+        * /like
+            * method = post
+            * request = {placeName="한라산", email=""}
+            * response = {res=True, msg="좋아요가 완료되었습니다." val=""}
+            * 기능 = place 데이터베이스에 해당 이메일이 존재한다면 like를 하고 존재하지 않는다면 unlike를 한다. 로그인된 아이디로 장소를 좋아요/좋아요 취소 한다.
+
+    </details>
+
+    * <details>
+      <summary>기능적 요구</summary>
+      <br>
+
+      여행지 데이터 직접 입력 or scraping   
+
+      Jinja2에 대한 연구   
+
+      JWT에 대한 연구   
+      
+      </details>
+      <br>
+
  
+
+
+<details>
+<summary>드랍다운</summary>
+<br>
+
+드랍다운 내용
+</details>
+<br>
