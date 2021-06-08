@@ -1,9 +1,18 @@
 <!DOCTYPE html>
 <html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Upload</title>
+</head>
+<body>
+
+</body>
+</html><!DOCTYPE html>
+<html lang="en">
 
 <head>
     <meta charset="UTF-8">
-    <title>Login</title>
+    <title>Wanderer Login Page</title>
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Do+Hyeon&display=swap" rel="stylesheet">
     <style>
@@ -17,34 +26,15 @@
             -moz-background-size: cover;
             -o-background-size: cover;
             background-size: cover;
-            width: 100%;
-            height: 100%;
         }
-
-        body {
-            position: absolute;
-        }
-
-
-        .inner_login {
-            background-color: rgba(0, 0, 0, 0.5);
-        }
-
-
         .biglogo {
-            font-size: 100vw;
+            font-size: 100px;
             color: black;
         }
-
         .inner_box {
             height: 500px;
             position: center;
-
-            width: 200px;
-
             width: 800px;
-
-
             text-align: center;
             display: block;
             margin: 100px auto 40px auto;
@@ -52,7 +42,6 @@
             background-color: white;
             opacity: 40%;
         }
-
         .inner_box2 {
             height: 500px;
             position: center;
@@ -72,7 +61,6 @@
             margin: auto;
             padding: auto;
         }
-
         .wrap {
             margin: auto;
         }
@@ -84,7 +72,7 @@
             border-radius: 20px;
             border-style: 1px solid gray;
             background-color: transparent;
-            font-size: 15px;
+          font-size: 15px;
         }
 
 
@@ -97,47 +85,35 @@
             font-size: 18px;
             color: black;
         }
-
-        input::-webkit-input-placeholder {
-            color: black;
-        }
+        input::-webkit-input-placeholder { color: black; }
     </style>
-
 
 </head>
 
 <body>
     <div class="wrap">
-        <div class="inner_box">
-            <div class="inner_login">
-                <div class="form-login">
-                    <input type="email" class="form-control" id="floatingInput" placeholder="name@example.com">
-                    <label for="floatingInput"></label>
-                    <p>
-                        <input type="password" class="form-control" id="floatingPassword" placeholder="Password">
-                        <label for="floatingPassword"></label>
-                    </p>
-                </div>
-                <button type="button" class="btn btn-outline-secondary">L o g i n</button>
-                <div class="background_image">
-                    <div class="inner_box">
-                        <p class="biglogo">W a n d e r e r</p>
-                        <div class="inner_login">
-                            <div class="form-login">
-                                <input type="email" class="form-control" id="floatingInput"
-                                    placeholder="Name@example.com">
-                                <label for="floatingInput"></label>
-                                <p>
-                                    <input type="password" class="form-control" id="floatingPassword"
-                                        placeholder="Password">
-                                    <label for="floatingPassword"></label>
-                                </p>
-                            </div>
-                            <button type="button" class="btn btn-outline-secondary">L o g i n</button>
-                            <div class="inner_box2"></div>
+        <div class="background_image">
+
+            <div class="inner_box">
+                    <p class="biglogo">W a n d e r e r</p>
+                    <div class="inner_login">
+                        <div class="form-login">
+                            <input type="ima_url" class="form-control" id="floatingInput" placeholder="Image URL">
+                            <label for="floatingInput"></label>
+                            <p>
+                                <input type="place_name" class="form-control" id="floatingPassword"
+                                       placeholder="Place Name">
+                                <label for="floatingPassword"></label>
+                            </p>
+                          <input type="place_location" class="form-control" id="floatingInput" placeholder="Place Location">
+                            <label for="floatingInput"></label><p></p>
                         </div>
+                        <button type="button" class="btn btn-outline-secondary">Upload</button>
+                        <div class="inner_box2"></div>
                     </div>
-                </div>
+
+            </div>
+        </div>
 </body>
 
 </html>

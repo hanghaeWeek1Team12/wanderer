@@ -31,7 +31,7 @@ else:
 
 @app.route('/')
 def home():
-    return render_template('login.html')
+    return render_template('signup.html')
 
 
 @app.route("/login", methods=["POST"])
