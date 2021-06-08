@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 // 좋아요 기능
 function toggle_like(placeName,status) {
     let email = "ysong0504@gmail.com"
@@ -15,3 +16,5 @@ function toggle_like(placeName,status) {
     })
 
 }
+=======
+>>>>>>> a49943f180fc8fe7fa7c1234f09daa23c7cbd208

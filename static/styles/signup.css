@@ -20,21 +20,27 @@ body{
 }
 .biglogo {
     padding-top: 5vw;
-    font-size: max(8vw, 40px);
+    font-size: max(8vw, 43px);
     font-family: 'Do Hyeon';
-    color: black;
+    color: rgb(225, 225, 225);
 }
 
 .inner_box {
     position: absolute;
-    bottom: 20px;
+    bottom: 50px;
     left: 0px;
     right: 0px;
     margin: auto;
-    height: 300px;
-    width: 250px;
+    height: 260px;
+    width: 300px;
     background-color: none;
     text-align: center;
+
+    padding: 20px;
+    padding-bottom: 0px;
+    border-radius: 10px;
+
+    background-color: rgba(36, 36, 36, 0.3);
 }
 
 .form-control {
@@ -64,63 +70,5 @@ body{
     height: 40px;
     text-align: center;
     border-radius: 20px;
-    /* border-style: 1px solid gray;
-    background-color: white; */
     font-size: 15px;
 }
-
-/* 
-.inner_box {
-    height: 500px;
-    position: center;
-    width: 800px;
-    text-align: center;
-    display: block;
-    margin: 100px auto 40px auto;
-    padding: 60px 5px 60px 5px;
-}
-
-.inner_box2 {
-    height: 500px;
-    position: center;
-    width: 800px;
-    text-align: center;
-    display: block;
-    margin: 40px auto 40px auto;
-    padding: 60px 5px 60px 5px;
-    background-color: transparent;
-}
-
-
-
-.inner_login {
-    width: 500px;
-    height: 100px;
-    margin: auto;
-    padding: auto;
-}
-
-.btn-outline-secondary {
-    width: 100px;
-    height: 35px;
-    text-align: center;
-    border-radius: 20px;
-    border-style: 1px solid gray;
-    background-color: transparent;
-    font-size: 15px;
-}
-
-
-.form-control {
-    background-color: transparent;
-    border-style: none;
-    width: 250px;
-    height: 30px;
-    border-bottom: 1px solid black;
-    font-size: 18px;
-    color: black;
-}
-
-input::-webkit-input-placeholder {
-    color: black;
-} */
