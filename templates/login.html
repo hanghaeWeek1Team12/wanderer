@@ -1,19 +1,78 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Wanderer Login Page</title>
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Do+Hyeon&display=swap" rel="stylesheet">
+    <style>
+        * {
+            font-family: 'Do Hyeon', sans-serif;
+        }
+
+        .background_image {
+            height: auto;
+            background-image: url("https://i.ytimg.com/vi/i2nHS93ly3M/maxresdefault.jpg");
+            background-size: cover;
+            background-color: green;
+            text-align: center;
+            background-position: 50%;
+
+        }
+        .inner_login {
+
+        }
+        .inner_box {
+            height: 200px;
+            position: center;
+            width: 400px;
+            text-align: center;
+            display: block;
+            margin: 0px auto;
+            padding: 500px 5px 100px 5px;
+        }
+
+        .wrap {
+            margin: auto;
+        }
+
+        .btn-outline-secondary {
+            width: 100px;
+            height: 30px;
+            text-align: center;
+            border-radius: 80px / 40px;
+            background-color: none;
+
+        }
+
+
+        .form-control {
+            background-color: transparent;
+            border-style: none;
+            width: 200px;
+            height: 25px;
+        }
+
+    </style>
+
 </head>
-
 <body>
-    <form action="/login" method="POST">
-        <input type="username" name="username" placeholder="Username"> <br><br>
-        <input type="password" name="password" placeholder="Password"> <br><br>
-        <input type="submit" value="Login">
-    </form>
-</body>
+<div class="wrap">
+    <div class="background_image">
+        <div class="inner_box">
+            <div class="inner_login">
+            <div class="form-login">
+                <input type="email" class="form-control" id="floatingInput" placeholder="name@example.com">
+                <label for="floatingInput"></label>
+            <p>
+                <input type="password" class="form-control" id="floatingPassword" placeholder="Password">
+                <label for="floatingPassword"></label>
+            </p>
+            </div>
+            <button type="button" class="btn btn-outline-secondary">L o g i n</button>
+        </div>
+    </div>
+</div>
 
+</body>
 </html>
