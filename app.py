@@ -1,97 +1,68 @@
+
 from flask import Flask, request, jsonify, make_response, request, render_template, session, flash
 import jwt
-from datetime import datetime, timedelta
-from functools import wraps
+import bcrypt
 
 
 app = Flask(__name__)
 
 
-app.config['SECRET_KEY'] = 'YOU_SECRET_KEY'
+app.config['SECRET_KEY'] = '452325d3c00449738b52eab18c63edf7'
+app.config['ALGORITHM'] = 'HS256'
 # how to get a secret key
-# In your command line >>> access Python >>> then type:
-
-# OS Approach
-# import os
-# os.urandom(14)
 
 # UUID Approach
 # import uuid
 # uuid.uuid4().hex
 
-# Secrets [ only for Python 3.6 + ]
-#import secrets
-# secrets.token_urlsafe(14)
 
-
-def token_required(func):
-    # decorator factory which invoks update_wrapper() method and passes decorated function as an argument
-    @wraps(func)
-    def decorated(*args, **kwargs):
-        token = request.args.get('token')
-        if not token:
-            return jsonify({'Alert!': 'Token is missing!'}), 401
-        try:
-            data = jwt.decode(token, app.config['SECRET_KEY'])
-        # You can use the JWT errors in exception
-        # except jwt.InvalidTokenError:
-        #     return 'Invalid token. Please log in again.'
-        except jwt.InvalidTokenError:
-            return jsonify({'Message': 'Invalid token'}), 403
-        return func(*args, **kwargs)
-    return decorated
+# 임의의 패스워드?
+password = b"password"
+# bcrypt에서 소금을 뿌려줍니다.
+salt = bcrypt.gensalt()
+# password 와 소금을 이용하여 hashed를 만듭니다.
+hashed = bcrypt.hashpw(password, salt)
+# 위에 만들어진 hashed가 일치하는지 확인합니다.
+if bcrypt.checkpw(password, hashed):
+    print("match")
+else:
+    print("does not match")
 
 
 @app.route('/')
 def home():
-    # if not session.get('logged_in'):
-    #     return render_template('login.html')
-    # else:
-    #     return 'logged in currently'
-    return render_template('index.html')
-
-# Just to show you that a public route is available for everyone
+    return
 
 
-@app.route('/public')
-def public():
-    return 'For Public'
-
-# auth only if you copy your token and paste it after /auth?query=XXXXXYour TokenXXXXX
-# Hit enter and you will get the message below.
-
-
-@app.route('/auth')
-@token_required
-def auth():
-    return 'JWT is verified. Welcome to your dashboard !  '
-
-# Login page
-
-
-@app.route('/login', methods=['POST'])
+@app.route("/login", methods=["POST"])
 def login():
-    if request.form['username'] and request.form['password'] == '123456':
-        session['logged_in'] = True
+    credential = request.json
+    email = request.form["email"]
+    password = request.form["password"]
 
-        token = jwt.encode({
-            'user': request.form['username'],
-            # don't foget to wrap it in str function, otherwise it won't work [ i struggled with this one! ]
-            'expiration': str(datetime.utcnow() + timedelta(seconds=60))
-        },
-            app.config['SECRET_KEY'])
-        return jsonify({'token': token.decode('utf-8')})
+    # 패스워드를 해슁해서 저장하는 꼴
+    row = app.database.execute(text("""
+          SELECT
+              id,
+              hashed_password
+          FROM users
+          WHERE email = :email
+      """), {'email': email}).fetchone()
+
+    if row and bcrypt.checkpw(password.encode("UTF-8"), row["hashed_password"].encode("UTF-8")):
+        user_id = row["id"]
+        payload = {
+            "user_id": user_id,
+            "exp": datetime.utcnow() + timedelta(seconds=60 * 60 * 24)
+        }
+
+        token = jwt.encode(payload, app.config["JWT_SECRET_KEY"], "HS256")
+
+        return jsonify({
+            "access_token": token.decode("UTF-8")
+        })
     else:
-        return make_response('Unable to verify', 403, {'WWW-Authenticate': 'Basic realm: "Authentication Failed "'})
-
-
-# Homework: You can try to create a logout page
-
-
-@app.route('/logout', methods=['POST'])
-def logout():
-    pass
-# your code goes here
+        return '', 401
 
 
 if __name__ == "__main__":

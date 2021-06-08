@@ -89,6 +89,23 @@
     </details>
 
     * <details>
+      <summary>데이터베이스</summary>
+        <br>
+
+        * wanderer 
+          * user
+            * email = str
+            * nickname = str
+            * password = str
+          * place
+            * placeName = str
+            * imageURL = str
+            * location = str
+            * likedUser = arr[email = str]
+
+    </details>
+
+    * <details>
       <summary>기능적 요구</summary>
       <br>
 
@@ -184,6 +201,7 @@
       >>>>>>>>>> dg9nfiod92huf93js
       ```
       코드가 오류가 나지 않게 병합해주세요!   
+      위 특수문자를 모두 삭제하고 코드를 정리하면 됩니다.   
 
       </details>
 
