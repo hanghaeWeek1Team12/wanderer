@@ -31,7 +31,7 @@ else:
 
 @app.route('/')
 def home():
-    return render_template('login.html')
+    return render_template('signup.html')
 
 
 @app.route("/login", methods=["POST"])
@@ -153,8 +153,15 @@ def login_required(f):
 @app.route("/placelist", methods=["POST"])
 @login_required
 def place_list():
+
     return "완료"
 
 
 if __name__ == "__main__":
     app.run('0.0.0.0', port=8080, debug=True)
+
+
+diction = {key: "value"}
+array = [diction, diction, diction]
+
+print(array)
