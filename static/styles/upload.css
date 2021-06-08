@@ -1,0 +1,74 @@
+* {
+    font-family:  sans-serif;
+}
+
+html {
+    background: url("/static/img/back_img_org.jpg") no-repeat center center fixed;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+}
+
+body{
+    background-color: transparent;
+}
+
+/* header */
+.header{
+    text-align: center;
+}
+.biglogo {
+    padding-top: 5vw;
+    font-size: max(8vw, 43px);
+    font-family: 'Do Hyeon';
+    color: rgb(225, 225, 225);
+}
+
+.inner_box {
+    position: absolute;
+    bottom: 50px;
+    left: 0px;
+    right: 0px;
+    margin: auto;
+    height: 260px;
+    width: 300px;
+    background-color: none;
+    text-align: center;
+
+    padding: 20px;
+    padding-bottom: 0px;
+    border-radius: 10px;
+
+    background-color: rgba(36, 36, 36, 0.3);
+}
+
+.form-control {
+    background-color: transparent;
+    border-style: none;
+    width: 250px;
+    height: 30px;
+    border-bottom: 1px solid white;
+    font-size: 18px;
+    color: rgb(170, 170, 170);
+}
+
+.form-control::placeholder { 
+    color: rgb(190, 190, 190);
+    opacity: 1;
+}
+
+.form-control:focus {
+    background-color: transparent;
+    outline: none;
+    box-shadow: none;
+    color: white;
+}
+
+.inner_box button {
+    width: 100%;
+    height: 40px;
+    text-align: center;
+    border-radius: 20px;
+    font-size: 15px;
+}

@@ -50,6 +50,11 @@ def static_login():
     return render_template('login.html')
 # api url
 
+@app.route('/upload', methods=["GET"])
+def static_upload():
+    return render_template('upload.html')
+# api url
+
 
 @app.route("/login", methods=["POST"])
 def login():
