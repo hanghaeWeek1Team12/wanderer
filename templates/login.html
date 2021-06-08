@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <title>Wanderer Login Page</title>
@@ -10,18 +11,16 @@
             font-family: 'Do Hyeon', sans-serif;
         }
 
-        .background_image {
-            height: auto;
-            background-image: url("https://i.ytimg.com/vi/i2nHS93ly3M/maxresdefault.jpg");
+        html {
+            background: url("https://i.ytimg.com/vi/i2nHS93ly3M/maxresdefault.jpg") no-repeat center center fixed;
+            -webkit-background-size: cover;
+            -moz-background-size: cover;
+            -o-background-size: cover;
             background-size: cover;
-            background-color: green;
-            text-align: center;
-            background-position: 50%;
-
         }
-        .inner_login {
 
-        }
+        .inner_login {}
+
         .inner_box {
             height: 200px;
             position: center;
@@ -52,27 +51,27 @@
             width: 200px;
             height: 25px;
         }
-
     </style>
 
 </head>
+
 <body>
-<div class="wrap">
-    <div class="background_image">
+    <div class="wrap">
+        <!-- <div class="background_image"> -->
         <div class="inner_box">
             <div class="inner_login">
-            <div class="form-login">
-                <input type="email" class="form-control" id="floatingInput" placeholder="name@example.com">
-                <label for="floatingInput"></label>
-            <p>
-                <input type="password" class="form-control" id="floatingPassword" placeholder="Password">
-                <label for="floatingPassword"></label>
-            </p>
+                <div class="form-login">
+                    <input type="email" class="form-control" id="floatingInput" placeholder="name@example.com">
+                    <label for="floatingInput"></label>
+                    <p>
+                        <input type="password" class="form-control" id="floatingPassword" placeholder="Password">
+                        <label for="floatingPassword"></label>
+                    </p>
+                </div>
+                <button type="button" class="btn btn-outline-secondary">L o g i n</button>
             </div>
-            <button type="button" class="btn btn-outline-secondary">L o g i n</button>
         </div>
-    </div>
-</div>
-
+        <!-- </div> -->
 </body>
+
 </html>
