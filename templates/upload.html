@@ -23,11 +23,11 @@
     <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
 
     <!-- css -->
-    <link rel="stylesheet" href="../static/styles/signup.css">
+    <link rel="stylesheet" href="../static/styles/upload.css">
 
     <!-- main.js -->
     <script type=text/javascript src="{{
-        url_for('static', filename='js/signup.js') }}"></script>
+        url_for('static', filename='js/upload.js') }}"></script>
 
 </head>
 
@@ -36,19 +36,17 @@
         <p class="biglogo">W a n d e r e r</p>
     </div>
     <div class="inner_box">
-        <div class="form-signup">
+        <div class="form-upload">
 
-            <input type="email" class="form-control" id="email" placeholder="이메일">
-            <label for="email"></label>
-
-            <input type="password" class="form-control" id="password" placeholder="비밀번호">
-            <label for="password"></label>
-
-            <input type="nickName" class="form-control" id="nickName" placeholder="닉네임">
-            <label for="nickName"></label>
+            <input type="imageURL" class="form-control" id="imageURL" placeholder="이미지URL">
+            <label for="imageURL"></label>
+            <input type="placeName" class="form-control" id="placeName" placeholder="장소 명칭">
+            <label for="placeName"></label>
+            <input type="location" class="form-control" id="location" placeholder="장소 위치">
+            <label for="location"></label>
             <p></p>
         </div>
-        <button type="button" onclick="signup()" class="btn btn btn-primary">회원가입</button>
+        <button type="button" onclick="upload()" class="btn btn btn-primary">업로드</button>
 </body>
 
 </html>

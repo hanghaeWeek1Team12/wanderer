@@ -26,6 +26,10 @@
     <script type=text/javascript src="{{
         url_for('static', filename='js/main.js') }}"></script>
 
+    <!-- toggleLike.js -->
+    <script type=text/javascript src="{{
+            url_for('static', filename='js/toggleLike.js') }}"></script>
+
 </head>
 
 <body>
@@ -38,11 +42,12 @@
     <!-- 카드 컬럼 -->
     <div class="flex-grid">
         {% for placelist in lists %}
-            {# 서버에서 받아온 데이터들 변수에 할당#}
-            {% set imageURL = placelist['imageURL'] %}
-            {% set placeName = placelist['placeName'] %}
-            {% set location = placelist['location'] %}
+        {# 서버에서 받아온 데이터들 변수에 할당#}
+        {% set imageURL = placelist['imageURL'] %}
+        {% set placeName = placelist['placeName'] %}
+        {% set location = placelist['location'] %}
 
+<<<<<<< HEAD
 {#            임시#}
 {#            {% for i in range(0,13) %}#}
                 <div class="flex-grid-item">
@@ -67,28 +72,53 @@
                             </h5>
                         </div>
                         <div class="right">
+=======
+        <div class="flex-grid-item">
+            <div class="card">
+                <img class="card-image-top" src="{{ imageURL }}" alt="imageURL">
+                <div class="card-top">
+                    <div class="left">
+                        <h6 class="card-subtitle text-muted">
+                            <i class="fa fa-heart" aria-hidden="true">
+                                <span id="likeCount" style="margin-right: 15px">
+                                    20명이 좋아합니다.
+                                </span>
+                            </i>
+                        </h6>
+                        <h5 class="card-title1">
+                            {{ placeName }}
+                        </h5>
+                    </div>
+                    <div class="right">
+>>>>>>> d31f3c48e12424cc6e3e3d76d3afe9e3a6aa2239
                         {% for list in liked_list %}
-                           {% if list['placeName'] == placeName %}
-                               <!-- 좋아요'누른 내역이 있을시 색깔있는 하트 출력-->
-                                <i onclick="toggle_like('{{ placeName }}','unlike')" class="fa fa-heart" aria-hidden="true"></i>
-                           {% else %}
-                               <!-- 좋아요'누른 내역이 있을시 색깔있는 하트 출력-->
-                                <i onclick="toggle_like('{{ placeName }}','like')" class="fa fa-heart-o fa-lg" aria-hidden="true"></i>
-                            {% endif %}
+                        {% if list['placeName'] == placeName %}
+                        <!-- 좋아요'누른 내역이 있을시 색깔있는 하트 출력-->
+                        <i onclick="toggle_like('{{ placeName }}','unlike')" class="fa fa-heart" aria-hidden="true"></i>
+                        {% else %}
+                        <!-- 좋아요'누른 내역이 있을시 색깔있는 하트 출력-->
+                        <i onclick="toggle_like('{{ placeName }}','like')" class="fa fa-heart-o fa-lg"
+                            aria-hidden="true"></i>
+                        {% endif %}
                         {% endfor %}
                         <!-- likedUser 리스트가 없을 시 빈 하트 출력 -->
                         {% if liked_list.count() == 0 %}
-                             <i onclick="toggle_like('{{ placeName }}','like')" class="fa fa-heart-o fa-lg" aria-hidden="true"></i>
+                        <i onclick="toggle_like('{{ placeName }}','like')" class="fa fa-heart-o fa-lg"
+                            aria-hidden="true"></i>
                         {% endif %}
-                        </div>
                     </div>
-
-                    <h6 class="card-subtitle text-muted">
-                        <i class="fa fa-map-marker" aria-hidden="true"><span style="margin-left: 10px">{{ location }}</span></i>
-                    </h6>
                 </div>
+
+                <h6 class="card-subtitle text-muted">
+                    <i class="fa fa-map-marker" aria-hidden="true"><span style="margin-left: 10px">{{ location
+                            }}</span></i>
+                </h6>
             </div>
+<<<<<<< HEAD
 {#            {% endfor %}#}
+=======
+        </div>
+>>>>>>> d31f3c48e12424cc6e3e3d76d3afe9e3a6aa2239
         {% endfor %}
 
     </div>
