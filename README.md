@@ -102,6 +102,7 @@
             * imageURL = str
             * location = str
             * likedUser = arr[email = str]
+            * createdUser = str
 
     </details>
 

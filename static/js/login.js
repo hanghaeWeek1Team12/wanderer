@@ -1,3 +1,8 @@
+// 쿠키가 존재
+if (getCookie("jwt") != null) {
+    window.location.href = '../main';
+}
+
 function login() {
     console.log()
     $.ajax({

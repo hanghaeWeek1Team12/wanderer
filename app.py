@@ -53,6 +53,9 @@ def login():
     # 이메일이 일치하는 db를 가져옵니다.
     db_user = db.user.find_one({'email': email}, {'_id': False})
 
+    if db_user is None:
+        return {'res': False, 'msg': "해당 계정이 없습니다."}
+
     #  유니코드를 지원하기 위해 UTF-8을 사용합니다.
     utf_password = password.encode("UTF-8")
     utf_db_password = db_user['password']
@@ -130,7 +133,6 @@ def sign_up():
 def login_required(f):
     @wraps(f)
     def decorated_function(*args, **kwargs):
-        print("this working?")
         # jwt를 body에서 jwt로 받습니다.
         jwt_token = request.form["jwt"]
         # 토큰을 받았다면
@@ -248,15 +250,24 @@ def upload():
     loaction = request.form["loaction"]
     jwt = request.form["jwt"]
 
-    print(imgsrc, placeName, loaction, get_email_from_jwt(jwt))
+    if (imgsrc == ''):
+        return {'res': False, 'msg': "이미지 url을 입력해주세요."}
+    if (placeName == ''):
+        return {'res': False, 'msg': "장소 명칭을 입력해주세요."}
+    if (loaction == ''):
+        return {'res': False, 'msg': "장소 위치를 입력해주세요."}
+    if (jwt == '' or jwt == None):
+        return {'res': False, 'msg': "다시 로그인해주세요."}
 
     # db 안에 입력합니다.
     db.place.insert_one({
         'placeName': placeName,
         'imageURL': imgsrc,
         'location': loaction,
-        'likedUser': []
+        'likedUser': [],
+        'createdUser': get_email_from_jwt(jwt)
     })
+    return {'res': True, 'msg': "업로드가 완료되었습니다."}
 
 
 if __name__ == "__main__":
