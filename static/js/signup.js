@@ -1,8 +1,7 @@
 function signup() {
-    console.log()
     $.ajax({
         type: "POST",
-        url: "http://localhost:8080/signup",
+        url: "/signup",
         data: {
             email: $('#email').val(),
             password: $('#password').val(),
