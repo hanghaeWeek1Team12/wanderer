@@ -50,9 +50,10 @@ def static_login():
     return render_template('login.html')
 # api url
 
-@app.route('/upload', methods=["GET"])
+@app.route('/upload', methods=["get"])
 def static_upload():
     return render_template('upload.html')
+
 # api url
 
 
@@ -172,15 +173,25 @@ def login_required(f):
     return decorated_function
 
 
-@app.route("/placelist", methods=["POST"])
+@app.route("/upload", methods=["POST"])
 @login_required
 def place_list():
-    return "완료"
+    imageURL_receive = request.form['imageURL_give'],
+    placeName_receive = request.form['placeName_give'],
+    location_receive = request.form['location_give']
+
+    doc = {
+        'imageURL': imageURL_receive,
+        'placeName': placeName_receive,
+        'location': location_receive
+    }
+
+    db.wanderer.insert_one(doc)
+    return jsonify({'msg': '여행지가 성공적으로 업로드되었습니다.'})
 
 
 if __name__ == "__main__":
     app.run('0.0.0.0', port=8080, debug=True)
-
 
 diction = {'key': "value"}
 array = [diction, diction, diction]
