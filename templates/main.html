@@ -43,7 +43,9 @@
             {% set placeName = placelist['placeName'] %}
             {% set location = placelist['location'] %}
 
-            <div class="flex-grid-item">
+{#            임시#}
+{#            {% for i in range(0,13) %}#}
+                <div class="flex-grid-item">
                 <div class="card">
                     <img class="card-image-top" src="{{ imageURL }}" alt="imageURL">
                     <div class="card-top">
@@ -51,7 +53,12 @@
                             <h6 class="card-subtitle text-muted">
                                 <i class="fa fa-heart" aria-hidden="true">
                                     <span id="likeCount" style="margin-right: 15px">
-                                        20명이 좋아합니다.
+                                    <!-- '좋아요' 수 출력하기 -->
+                                        {% for count in like_count %}
+                                            {% if count['placeName'] == placeName %}
+                                                {{ count['totalCount'] }}명이 좋아합니다.
+                                            {% endif %}
+                                        {% endfor %}
                                     </span>
                                 </i>
                             </h6>
@@ -81,7 +88,9 @@
                     </h6>
                 </div>
             </div>
+{#            {% endfor %}#}
         {% endfor %}
+
     </div>
 </body>
 
