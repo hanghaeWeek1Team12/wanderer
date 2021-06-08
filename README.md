@@ -89,6 +89,23 @@
     </details>
 
     * <details>
+      <summary>데이터베이스</summary>
+        <br>
+
+        * wanderer 
+          * user
+            * email = str
+            * nickname = str
+            * password = str
+          * place
+            * placeName = str
+            * imageURL = str
+            * location = str
+            * likedUser = arr[email = str]
+
+    </details>
+
+    * <details>
       <summary>기능적 요구</summary>
       <br>
 
@@ -163,36 +180,29 @@
       <summary>git</summary>
       <br>
 
-      깃헙에는 branch 라는 개념이 있습니다.   
-      각자 수정하신 내용을 따로 commit(업로드) 하는 곳이 branch 입니다.   
-      Branch 를 원래 master branch에 업로드 하고 싶으시다면   
-      pull request를 해야 합니다.   
-
-      branch 생성하기
+      올리는 방법!   
       ```
-      git checkout -b 브랜치명
-      ```
-
-      branch 이동하기
-      ```
-      git checkout 브랜치명
-      ```
-
-      자신의 branch 에 커밋하기
-      ```
-      git add .
-      git commit -m "html 그리드를 수정"
-      git push origin 브린치명
+      git add .   
+      git commit -a -m "수정하신 코드에 대한 내용을 적어주세요"   
+      git push origin main
       ```
       
-      자신의 branch를 master에 병합 요청하기 (pull request)   
-      저희 project repository 웹사이트에서   
-      본인의 branch로 들어가신 다음   
-      Pull request 버튼을 눌러주세요.    
-      마지막으로 제목과 메시지를 넣어주시고   
-      create pull request를 눌러주시면 됩니다.   
-    
+      올리려고 했는데 에러가 나면!   
+      ```
+      git pull origin main
+      ```
       
+      중간에 병합 (에디터를 직접 확인하시고)
+      ```
+      <<<<<<<< HEAD
+      
+      ===============
+      
+      >>>>>>>>>> dg9nfiod92huf93js
+      ```
+      코드가 오류가 나지 않게 병합해주세요!   
+      위 특수문자를 모두 삭제하고 코드를 정리하면 됩니다.   
+
       </details>
 
 
