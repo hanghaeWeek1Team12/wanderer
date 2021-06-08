@@ -29,9 +29,23 @@ else:
     print("does not match")
 
 
-@app.route('/')
+# static url
+
+@app.route('/', methods=["GET"])
 def home():
+    return render_template('signup.html')
+
+
+@app.route('/signup', methods=["GET"])
+def static_signup():
+    return render_template('signup.html')
+
+
+@app.route('/main', methods=["GET"])
+def static_main():
     return render_template('main.html')
+
+# api url
 
 
 @app.route("/login", methods=["POST"])
@@ -153,7 +167,6 @@ def login_required(f):
 @app.route("/placelist", methods=["POST"])
 @login_required
 def place_list():
-
     return "완료"
 
 
