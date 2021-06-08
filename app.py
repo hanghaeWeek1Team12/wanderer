@@ -45,6 +45,9 @@ def static_signup():
 def static_main():
     return render_template('main.html')
 
+@app.route('/login', methods=["GET"])
+def static_login():
+    return render_template('login.html')
 # api url
 
 
@@ -174,7 +177,7 @@ if __name__ == "__main__":
     app.run('0.0.0.0', port=8080, debug=True)
 
 
-diction = {key: "value"}
+diction = {'key': "value"}
 array = [diction, diction, diction]
 
 print(array)
