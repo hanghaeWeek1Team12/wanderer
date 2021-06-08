@@ -47,32 +47,8 @@
         {% set placeName = placelist['placeName'] %}
         {% set location = placelist['location'] %}
 
-<<<<<<< HEAD
-{#            임시#}
-{#            {% for i in range(0,13) %}#}
-                <div class="flex-grid-item">
-                <div class="card">
-                    <img class="card-image-top" src="{{ imageURL }}" alt="imageURL">
-                    <div class="card-top">
-                        <div class="left">
-                            <h6 class="card-subtitle text-muted">
-                                <i class="fa fa-heart" aria-hidden="true">
-                                    <span id="likeCount" style="margin-right: 15px">
-                                    <!-- '좋아요' 수 출력하기 -->
-                                        {% for count in like_count %}
-                                            {% if count['placeName'] == placeName %}
-                                                {{ count['totalCount'] }}명이 좋아합니다.
-                                            {% endif %}
-                                        {% endfor %}
-                                    </span>
-                                </i>
-                            </h6>
-                            <h5 class="card-title1">
-                                {{ placeName }}
-                            </h5>
-                        </div>
-                        <div class="right">
-=======
+        {# 임시#}
+        {# {% for i in range(0,13) %}#}
         <div class="flex-grid-item">
             <div class="card">
                 <img class="card-image-top" src="{{ imageURL }}" alt="imageURL">
@@ -81,7 +57,12 @@
                         <h6 class="card-subtitle text-muted">
                             <i class="fa fa-heart" aria-hidden="true">
                                 <span id="likeCount" style="margin-right: 15px">
-                                    20명이 좋아합니다.
+                                    <!-- '좋아요' 수 출력하기 -->
+                                    {% for count in like_count %}
+                                    {% if count['placeName'] == placeName %}
+                                    {{ count['totalCount'] }}명이 좋아합니다.
+                                    {% endif %}
+                                    {% endfor %}
                                 </span>
                             </i>
                         </h6>
@@ -90,7 +71,6 @@
                         </h5>
                     </div>
                     <div class="right">
->>>>>>> d31f3c48e12424cc6e3e3d76d3afe9e3a6aa2239
                         {% for list in liked_list %}
                         {% if list['placeName'] == placeName %}
                         <!-- 좋아요'누른 내역이 있을시 색깔있는 하트 출력-->
@@ -114,13 +94,8 @@
                             }}</span></i>
                 </h6>
             </div>
-<<<<<<< HEAD
-{#            {% endfor %}#}
-=======
         </div>
->>>>>>> d31f3c48e12424cc6e3e3d76d3afe9e3a6aa2239
         {% endfor %}
-
     </div>
 </body>
 

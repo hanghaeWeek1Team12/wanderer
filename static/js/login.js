@@ -1,5 +1,3 @@
-import { setCookie } from './cookie.js';
-
 function login() {
     console.log()
     $.ajax({
@@ -14,7 +12,7 @@ function login() {
                 // 로그인에 성공하면
                 if (response['res']) {
                     // 쿠키에 jwt를 저장합니다.
-                    setCookie("jwt", jwt);
+                    setCookie("jwt", response['val']);
                     // 메인페이지로 들어갑니다.
                     window.location.href = '../main';
                 }

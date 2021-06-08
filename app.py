@@ -1,10 +1,17 @@
-from flask import Flask, render_template, request, jsonify, redirect, url_for
+
 from pymongo import MongoClient
-import requests
+from flask import Flask, request, jsonify, make_response, request, render_template, session, flash
+import jwt
+import bcrypt
+from datetime import timedelta, datetime
+import json
+from functools import wraps
+
+# mongoDB에서 db로 객체를 받아옵니다.
+client = MongoClient('localhost', 27017)
+db = client.wanderer
 
 app = Flask(__name__)
-<<<<<<< HEAD
-=======
 app.config['SECRET_KEY'] = '452325d3c00449738b52eab18c63edf7'
 app.config['ALGORITHM'] = 'HS256'
 
@@ -19,13 +26,8 @@ def home():
 @app.route('/signup', methods=["GET"])
 def static_signup():
     return render_template('signup.html')
->>>>>>> d31f3c48e12424cc6e3e3d76d3afe9e3a6aa2239
 
-client = MongoClient('localhost', 27017)
-db = client.wanderer
 
-<<<<<<< HEAD
-=======
 @app.route('/main', methods=["GET"])
 def static_main():
     return render_template('main.html')
@@ -36,10 +38,10 @@ def static_login():
     return render_template('login.html')
 # api url
 
-@app.route('/upload', methods=["get"])
+
+@app.route('/upload', methods=["GET"])
 def static_upload():
     return render_template('upload.html')
-
 # api url
 
 
@@ -63,67 +65,64 @@ def login():
         # 헤더는 알아서 만들어집니다.
         # typ 토큰의 타입을 지정
         # alg 알고리즘 방식을 지정 (jwt.encode의 세번째 인자 ALGORITHM)
->>>>>>> d31f3c48e12424cc6e3e3d76d3afe9e3a6aa2239
 
-# 여행지 리스트 출력
-@app.route("/placelist")
-def main():
-    # 테스트용
-    email_receive = "ysong0504@gmail.com"
-
-    # 현재 로그인한 계정이 '좋아요'른 누른 여행지 출력
-    if email_receive:
-        liked_list = db.place.find({"likedUser": [{"email": email_receive}]},
-                                   {'_id': 0, 'placeName': 1})
-
-    # 여행지별 좋아요 갯수 출력
-    like_count = list(db.place.aggregate([
-        {
-            '$project': {
-                '_id': 0,
-                'placeName': 1,
-                'totalCount': {'$size': ['$likedUser']}
-            }
+        # 페이로드를 만듭니다.
+        # iss: 토큰 발급자(issuer)
+        # sub: 토큰 제목(subject) 보통 이메일을 사용
+        # aud: 토큰 대상자(audience)
+        # exp: 토큰 만료 시간(expiration), NumericDate 형식으로 되어 있어야 함 ex) 1480849147370
+        # nbf: 토큰 활성 날짜(not before), 이 날이 지나기 전의 토큰은 활성화되지 않음
+        # iat: 토큰 발급 시간(issued at), 토큰 발급 이후의 경과 시간을 알 수 있음
+        # jti: JWT 토큰 식별자(JWT ID), 중복 방지를 위해 사용하며, 일회용 토큰(Access Token) 등에 사용
+        # 출처 : https://mangkyu.tistory.com/56
+        payload = {
+            "sub": user_email,
+            "exp": datetime.utcnow() + timedelta(seconds=60 * 60 * 24)
         }
-    ]))
 
-    # 여행지 리스트 출력
-    lists = list(db.place.find({}, {'_id': False}))
-    
-    return render_template("main.html", lists=lists, liked_list=liked_list, like_count=like_count)
+        # payload와 우리의 SECRET_KEY를 ALGORITHM을 통해 jwt를 만듭니다.
+        token = jwt.encode(
+            payload, app.config["SECRET_KEY"], app.config['ALGORITHM'])
 
-
-# 좋아요 확인하기
-@app.route("/like", methods=['POST'])
-def like_place():
-    placeName_receive = request.form['placeName_give']
-    email_receive = request.form['email_give']
-    status_receive = request.form['status_give']
-
-    # 좋아요 취소 (pull을 이용하여 likedUser에서 해당 이메일 제거)
-    if status_receive == 'unlike':
-        db.place.update({"placeName": placeName_receive},
-                            {'$pull': {
-                                "likedUser": {"email": email_receive}
-                                }
-                            }
-                        )
-    # 좋아요 추가 (push로 likedUser에서 해당 이메일 추가)
+        return {'res': True, 'msg': "로그인되었습니다.", 'val': token.decode("UTF-8")}
     else:
-        db.place.update({"placeName": placeName_receive},
-                            {'$push': {
-                                "likedUser": {"email": email_receive}
-                                }
-                            }
-                        )
-
-<<<<<<< HEAD
-    return render_template("main.html")
+        return {'res': False, 'msg': "아이디와 비밀번호를 확인해주세요."}
 
 
-if __name__ == "__main__":
-    app.run('0.0.0.0', port=5000, debug=True)
-=======
+@app.route("/signup", methods=["POST"])
+def sign_up():
+    email = request.form["email"]
+    nickname = request.form["nickname"]
+    password = request.form["password"]
+
+    # db 안에 같은 이메일이 존재하는지 확인
+    db_email_match = db.user.find_one({'email': email}, {'_id': False})
+    if db_email_match is not None:
+        return {'res': False, 'msg': "이미 존재하는 이메일입니다"}
+
+    # db 안에 같은 닉네임이 존재하는지 확인
+    db_nick_match = db.user.find_one({'nickname': nickname}, {'_id': False})
+    if db_nick_match is not None:
+        return {'res': False, 'msg': "이미 존재하는 닉네임입니다"}
+
+    # 다 아닐 경우
+
+    # password를 암호화
+
+    # unicodes must be encoded before hashing
+    utf_password = password.encode('UTF-8')
+    # 소금간
+    new_salt = bcrypt.gensalt()
+    # 해쉬 생성
+    enc_password = bcrypt.hashpw(utf_password, new_salt)
+
+    # db 안에 입력합니다.
+    db.user.insert_one({
+        'email': email,
+        'nickname': nickname,
+        'password': enc_password,
+    })
+
     return {'res': True, 'msg': "회원가입 되었습니다."}
 
 
@@ -161,12 +160,8 @@ def login_required(f):
     return decorated_function
 
 
-
-@app.route("/upload", methods=["POST"])
-
 # 이 function은 jwt에서 이메일을 추출합니다.
-def get_email_from_jwt(jwt):
-    jwt_token = jwt
+def get_email_from_jwt(jwt_token):
     # 토큰을 받았다면
     if jwt_token is not None:
         try:
@@ -182,71 +177,90 @@ def get_email_from_jwt(jwt):
 
         # def login()에서 페이로드의 sub에 email을 넣었습니다.
         email = payload["sub"]
+        return email
 
 
-@app.route("/upload", methods=["POST"])
-
+@app.route("/placelist", methods=["POST"])
 @login_required
+def place_list():
+    return "완료"
+
+
+# 여행지 리스트 출력
+@app.route("/placelist")
+def placelist():
+    # 테스트용
+    email_receive = "ysong0504@gmail.com"
+
+    # 현재 로그인한 계정이 '좋아요'른 누른 여행지 출력
+    if email_receive:
+        liked_list = db.place.find({"likedUser": [{"email": email_receive}]},
+                                   {'_id': 0, 'placeName': 1})
+
+    # 여행지별 좋아요 갯수 출력
+    like_count = list(db.place.aggregate([
+        {
+            '$project': {
+                '_id': 0,
+                'placeName': 1,
+                'totalCount': {'$size': ['$likedUser']}
+            }
+        }
+    ]))
+
+    # 여행지 리스트 출력
+    lists = list(db.place.find({}, {'_id': False}))
+
+    return render_template("main.html", lists=lists, liked_list=liked_list, like_count=like_count)
+
+# 좋아요 확인하기
+
+
+@app.route("/like", methods=['POST'])
+def like_place():
+    placeName_receive = request.form['placeName_give']
+    email_receive = request.form['email_give']
+    status_receive = request.form['status_give']
+
+    # 좋아요 취소 (pull을 이용하여 likedUser에서 해당 이메일 제거)
+    if status_receive == 'unlike':
+        db.place.update({"placeName": placeName_receive},
+                        {'$pull': {
+                            "likedUser": {"email": email_receive}
+                        }
+        }
+        )
+    # 좋아요 추가 (push로 likedUser에서 해당 이메일 추가)
+        db.place.update({"placeName": placeName_receive},
+                        {'$push': {
+                            "likedUser": {"email": email_receive}
+                        }
+        }
+        )
+    return render_template("main.html")
+
+
+@ app.route("/upload", methods=["POST"])
+@ login_required
 def upload():
-    imageURL_receive = request.form['imageURL_give'],
-    placeName_receive = request.form['placeName_give'],
-    location_receive = request.form['location_give']
-
-    doc = {
-        'imageURL': imageURL_receive,
-        'placeName': placeName_receive,
-        'location': location_receive
-    }
-
-    db.wanderer.insert_one(doc)
-    return jsonify({'msg': '여행지가 성공적으로 업로드되었습니다.'})
-
-
-
     imgsrc = request.form["imgsrc"]
     placeName = request.form["placeName"]
     loaction = request.form["loaction"]
-    uploadedEmail = request.form["uploadedEmail"]
+    jwt = request.form["jwt"]
 
-    # db 안에 같은 이메일이 존재하는지 확인
-    db_email_match = db.user.find_one({'email': email}, {'_id': False})
-    if db_email_match is not None:
-        return {'res': False, 'msg': "이미 존재하는 이메일입니다"}
-
-    # db 안에 같은 닉네임이 존재하는지 확인
-    db_nick_match = db.user.find_one({'nickname': nickname}, {'_id': False})
-    if db_nick_match is not None:
-        return {'res': False, 'msg': "이미 존재하는 닉네임입니다"}
-
-    # 다 아닐 경우
-
-    # password를 암호화
-
-    # unicodes must be encoded before hashing
-    utf_password = password.encode('UTF-8')
-    # 소금간
-    new_salt = bcrypt.gensalt()
-    # 해쉬 생성
-    enc_password = bcrypt.hashpw(utf_password, new_salt)
+    print(imgsrc, placeName, loaction, get_email_from_jwt(jwt))
 
     # db 안에 입력합니다.
-    db.user.insert_one({
-        'email': email,
-        'nickname': nickname,
-        'password': enc_password,
+    db.place.insert_one({
+        'placeName': placeName,
+        'imageURL': imgsrc,
+        'location': loaction,
+        'likedUser': []
     })
-
-    return {'res': True, 'msg': "회원가입 되었습니다."}
 
 
 if __name__ == "__main__":
     app.run('0.0.0.0', port=8080, debug=True)
-
-
-diction = {'key': "value"}
-array = [diction, diction, diction]
-
-print(array)
 
 
 # 연습장
@@ -261,5 +275,3 @@ if bcrypt.checkpw(password, hashed):
     print("match")
 else:
     print("does not match")
-
->>>>>>> d31f3c48e12424cc6e3e3d76d3afe9e3a6aa2239

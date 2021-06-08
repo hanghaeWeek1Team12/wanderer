@@ -1,5 +1,3 @@
-import { getCookie } from './cookie.js';
-
 function upload() {
     $.ajax({
         type: "POST",
@@ -7,7 +5,7 @@ function upload() {
         data: {
             imgsrc: $('#imgsrc').val(),
             placeName: $('#placeName').val(),
-            loaction: $('#loaction').val(),
+            loaction: $('#location').val(),
             jwt: getCookie('jwt')
         },
         success:

@@ -25,7 +25,11 @@
     <!-- css -->
     <link rel="stylesheet" href="../static/styles/upload.css">
 
-    <!-- main.js -->
+    <!-- cookie.js -->
+    <script type=text/javascript src="{{
+            url_for('static', filename='js/cookie.js') }}"></script>
+
+    <!-- upload.js -->
     <script type=text/javascript src="{{
         url_for('static', filename='js/upload.js') }}"></script>
 
@@ -38,8 +42,8 @@
     <div class="inner_box">
         <div class="form-upload">
 
-            <input type="imageURL" class="form-control" id="imageURL" placeholder="이미지URL">
-            <label for="imageURL"></label>
+            <input type="imgsrc" class="form-control" id="imgsrc" placeholder="이미지URL">
+            <label for="imgsrc"></label>
             <input type="placeName" class="form-control" id="placeName" placeholder="장소 명칭">
             <label for="placeName"></label>
             <input type="location" class="form-control" id="location" placeholder="장소 위치">
