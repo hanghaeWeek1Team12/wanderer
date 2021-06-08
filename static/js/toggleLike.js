@@ -1,5 +1,5 @@
 // 좋아요 기능
-function toggle_like(placeName,status) {
+function toggle_like(placeName, status) {
     let email = "ysong0504@gmail.com"
     $.ajax({
         type: "POST",
@@ -13,5 +13,4 @@ function toggle_like(placeName,status) {
             window.location.reload()
         }
     })
-
 }

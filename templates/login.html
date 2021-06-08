@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Wander</title>
+
+    <!-- font -->
+    <link href="https://fonts.googleapis.com/css2?family=Do+Hyeon&display=swap" rel="stylesheet">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"></script>
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+
+    <!-- css -->
+    <link rel="stylesheet" href="../static/styles/login.css">
+
+    <!-- main.js -->
+    <script type=text/javascript src="{{
+        url_for('static', filename='js/login.js') }}"></script>
+
+</head>
+
+<body>
+    <div class="header">
+        <p class="biglogo">W a n d e r e r</p>
+    </div>
+    <div class="inner_box">
+        <div class="form-login">
+
+            <input type="email" class="form-control" id="email" placeholder="이메일">
+            <label for="email"></label>
+
+            <input type="password" class="form-control" id="password" placeholder="비밀번호">
+            <label for="password"></label>
+
+            <p></p>
+        </div>
+        <button type="button" onclick="login()" class="btn btn btn-primary">로그인</button>
+</body>
+
+</html>

@@ -76,7 +76,7 @@
 
         * /upload
             * method = post
-            * request = {imgsrc="", placeName = "", loaction = "", jwt = JWT, uploaderEmail = ""}
+            * request = {imgsrc="", placeName = "", loaction = "", jwt = JWT}
             * response = {res=True, msg="", val=""}
             * 기능 = 장소를 업로드한다.
 
