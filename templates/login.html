@@ -12,34 +12,46 @@
         }
 
         html {
-            background: url("https://i.ytimg.com/vi/i2nHS93ly3M/maxresdefault.jpg") no-repeat center center fixed;
+            background: url("https://static.toiimg.com/photo/80978946.cms") no-repeat center center fixed;
             -webkit-background-size: cover;
             -moz-background-size: cover;
             -o-background-size: cover;
             background-size: cover;
         }
-<<<<<<< HEAD
-        .inner_login {
-            width: 300px;
-            margin: auto;
-            height: 300px;
-            background-color: green;
+        .biglogo {
+            font-size: 100px;
+            color: black;
         }
-=======
-
-        .inner_login {}
-
->>>>>>> 22a8508278772c9810d0e24188ced6d0fa6afd24
         .inner_box {
-            height: 200px;
+            height: 500px;
             position: center;
-            width: 400px;
+            width: 800px;
             text-align: center;
             display: block;
-            margin: 0px auto;
-            padding: 500px 5px 100px 5px;
+            margin: 100px auto 40px auto;
+            padding: 60px 5px 60px 5px;
+            background-color: white;
+            opacity: 40%;
+        }
+        .inner_box2 {
+            height: 500px;
+            position: center;
+            width: 800px;
+            text-align: center;
+            display: block;
+            margin: 40px auto 40px auto;
+            padding: 60px 5px 60px 5px;
+            background-color: transparent;
         }
 
+
+
+        .inner_login {
+            width: 500px;
+            height: 100px;
+            margin: auto;
+            padding: auto;
+        }
         .wrap {
             margin: auto;
         }
@@ -48,11 +60,9 @@
             width: 100px;
             height: 30px;
             text-align: center;
-            border-radius: 80px / 40px;
-            background-color: none;
+            border-radius: 20px;
             border-style: 1px solid gray;
-
-
+            background-color: transparent;
         }
 
 
@@ -61,29 +71,37 @@
             border-style: none;
             width: 250px;
             height: 30px;
-            border-bottom: 1px solid gray;
+            border-bottom: 1px solid black;
+            font-size: 18px;
+            color: black;
         }
+        input::-webkit-input-placeholder { color: black; }
     </style>
 
 </head>
 
 <body>
     <div class="wrap">
-        <!-- <div class="background_image"> -->
-        <div class="inner_box">
-            <div class="inner_login">
-                <div class="form-login">
-                    <input type="email" class="form-control" id="floatingInput" placeholder="name@example.com">
-                    <label for="floatingInput"></label>
-                    <p>
-                        <input type="password" class="form-control" id="floatingPassword" placeholder="Password">
-                        <label for="floatingPassword"></label>
-                    </p>
-                </div>
-                <button type="button" class="btn btn-outline-secondary">L o g i n</button>
+        <div class="background_image">
+
+            <div class="inner_box">
+                    <p class="biglogo">W a n d e r e r</p>
+                    <div class="inner_login">
+                        <div class="form-login">
+                            <input type="email" class="form-control" id="floatingInput" placeholder="name@example.com">
+                            <label for="floatingInput"></label>
+                            <p>
+                                <input type="password" class="form-control" id="floatingPassword"
+                                       placeholder="Password">
+                                <label for="floatingPassword"></label>
+                            </p>
+                        </div>
+                        <button type="button" class="btn btn-outline-secondary">L o g i n</button>
+                        <div class="inner_box2"></div>
+                    </div>
+
             </div>
         </div>
-        <!-- </div> -->
 </body>
 
 </html>
