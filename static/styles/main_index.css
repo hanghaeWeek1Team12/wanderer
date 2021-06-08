@@ -1,0 +1,70 @@
+.wrap {
+	margin: auto;
+	width: 1000px;
+	height : 1000px;
+	background-color: blue;
+}
+
+/*각 카드의 포맷 (이미지와 텍스트 세로정렬)*/
+.card-form {
+	display: inline-block;
+	vertical-align: middle;
+}
+
+.logo {
+	height : 250px;
+}
+
+.img {
+	overflow: hidden;
+	position: absolute;
+	border: solid black;
+	border-radius: 30px;
+	width: 50px;
+	display: block;
+}
+
+.description {
+
+}
+
+.flex-grid {
+	display: flex;
+	flex-wrap: wrap;
+
+	margin-left: 70px;
+	margin-right: 70px;
+}
+
+.flex-grid-item {
+	height: 300px;
+	flex-grow: 1;
+	flex-shrink: 0;
+	flex-basis: 33.3333%;
+	/* 최소한의 width */
+	flex-basis: 250px;
+	/*flex-basis: 250px;*/
+	display: flex;
+	align-items: center;
+	justify-content: center;
+
+	padding: 5px;
+
+    position: relative;
+	overflow: hidden;
+	margin: 10px;
+	border: solid #CECECE 1.5px;
+	border-radius: 15px;
+
+	/*height: 240px;*/
+}
+
+.blank {
+	height: 0;
+}
+
+/* colors by clrs.cc*/
+.flex-grid-item:nth-child(1)  {
+	background-color: white; color: black;
+}
+
