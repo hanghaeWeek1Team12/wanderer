@@ -87,7 +87,11 @@ def login():
         token = jwt.encode(
             payload, app.config["SECRET_KEY"], app.config['ALGORITHM'])
 
-        return {'res': True, 'msg': "로그인되었습니다.", 'val': token.decode("UTF-8")}
+        if type(token) == bytes:
+            return {'res': True, 'msg': "로그인되었습니다.", 'val': token.decode("UTF-8")}
+        elif type(token) == str:
+            return {'res': True, 'msg': "로그인되었습니다.", 'val': token}
+
     else:
         return {'res': False, 'msg': "아이디와 비밀번호를 확인해주세요."}
 
@@ -271,7 +275,7 @@ def upload():
 
 
 if __name__ == "__main__":
-    app.run('0.0.0.0', port=8080, debug=True)
+    app.run('0.0.0.0', port=5000, debug=True)
 
 
 # 연습장
