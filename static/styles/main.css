@@ -5,8 +5,11 @@
 	height : 200px;
 	text-align: center;
 }
-.header h1{
+.header .biglogo{
 	padding-top: 50px;
+	font-size: max(8vw, 43px);
+    font-family: 'Do Hyeon';
+    color: rgb(100, 100, 100);
 }
 .header button{
 	position: absolute;

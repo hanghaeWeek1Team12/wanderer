@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Wander</title>
 
-    <!-- font -->
+    <!-- logo font -->
     <link href="https://fonts.googleapis.com/css2?family=Do+Hyeon&display=swap" rel="stylesheet">
 
     <!-- Bootstrap CSS -->
@@ -21,6 +21,10 @@
         integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
         crossorigin="anonymous"></script>
     <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+
+    <!-- logoToMain.js -->
+    <script type=text/javascript src="{{
+            url_for('static', filename='js/logoToMain.js') }}"></script>
 
     <!-- css -->
     <link rel="stylesheet" href="../static/styles/upload.css">
@@ -37,7 +41,7 @@
 
 <body>
     <div class="header">
-        <p class="biglogo">W a n d e r e r</p>
+        <p class="biglogo" onclick="logoToMain()">W a n d e r e r</p>
     </div>
     <div class="inner_box">
         <div class="form-upload">

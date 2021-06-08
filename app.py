@@ -1,4 +1,3 @@
-
 from pymongo import MongoClient
 from flask import Flask, request, jsonify, make_response, request, render_template, session, flash
 import jwt
@@ -54,15 +53,14 @@ def login():
     db_user = db.user.find_one({'email': email}, {'_id': False})
 
     if db_user is None:
-        return {'res': False, 'msg': "해당 계정이 없습니다."}
+        return {'res': False, 'msg': "아이디와 비밀번호를 확인해주세요."}
 
     #  유니코드를 지원하기 위해 UTF-8을 사용합니다.
     utf_password = password.encode("UTF-8")
     utf_db_password = db_user['password']
 
     # db_user가 존재하고 bcrypt가 checkPassword를 통과시키면
-    if db_user and bcrypt.checkpw(utf_password, utf_db_password):
-
+    if bcrypt.checkpw(utf_password, utf_db_password):
         user_email = db_user["email"]
 
         # 헤더는 알아서 만들어집니다.
@@ -192,7 +190,7 @@ def place_list():
 @app.route("/placelist")
 def placelist():
     # 테스트용
-    email_receive = "ysong0504@gmail.com"
+    email_receive = "dohyung97022@gmail.com"
 
     # 현재 로그인한 계정이 '좋아요'른 누른 여행지 출력
     if email_receive:
@@ -215,9 +213,8 @@ def placelist():
 
     return render_template("main.html", lists=lists, liked_list=liked_list, like_count=like_count)
 
+
 # 좋아요 확인하기
-
-
 @app.route("/like", methods=['POST'])
 def like_place():
     placeName_receive = request.form['placeName_give']

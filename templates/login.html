@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Wander</title>
 
-    <!-- font -->
+    <!-- logo font -->
     <link href="https://fonts.googleapis.com/css2?family=Do+Hyeon&display=swap" rel="stylesheet">
 
     <!-- Bootstrap CSS -->
@@ -25,6 +25,10 @@
     <!-- css -->
     <link rel="stylesheet" href="../static/styles/login.css">
 
+    <!-- logoToMain.js -->
+    <script type=text/javascript src="{{
+        url_for('static', filename='js/logoToMain.js') }}"></script>
+
     <!-- cookie.js -->
     <script type=text/javascript src="{{
             url_for('static', filename='js/cookie.js') }}"></script>
@@ -37,7 +41,7 @@
 
 <body>
     <div class="header">
-        <p class="biglogo">W a n d e r e r</p>
+        <p class="biglogo" onclick="logoToMain()">W a n d e r e r</p>
     </div>
     <div class="inner_box">
         <div class="form-login">
