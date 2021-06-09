@@ -33,6 +33,9 @@
     <!-- css -->
     <link rel="stylesheet" href="../static/styles/main.css">
 
+    <!-- modal -->
+    <link rel="stylesheet" href="../static/styles/modal.css">
+
     <!-- cookie.js -->
     <script type=text/javascript src="{{
         url_for('static', filename='js/cookie.js') }}"></script>
@@ -41,25 +44,16 @@
     <script type=text/javascript src="{{
             url_for('static', filename='js/toggleLike.js') }}"></script>
 
+    <!-- modal.js -->
+    <script type=text/javascript src="{{
+                url_for('static', filename='js/modal.js') }}"></script>
 </head>
 
 <body>
     <!-- 상단 로고 -->
     <div class="header">
         <p class="biglogo">W a n d e r e r</p>
-        <button type="button" class="btn btn-light" id="login" onclick="toPath('/login')">로그인</button>
-        <button type="button" class="btn btn-light" id="signup" onclick="toPath('/signup')">회원가입</button>
-        <button type="button" class="btn btn-light" id="upload" onclick="toPath('/upload')">
-            <i class="fas fa-camera-retro"></i>
-        </button>
-        <!-- 드랍다운 -->
-        <button type="button" class="btn btn-light" id="dropdown"><i class="fas fa-caret-down"></i></button>
-        <div id="dropdown-content">
-            <button type="button" class="btn btn-light"><i class="fas fa-caret-down"></i></button>
-            <button type="button" class="btn btn-light"><i class="fas fa-caret-down"></i></button>
-            <button type="button" class="btn btn-light"><i class="fas fa-caret-down"></i></button>
-        </div>
-
+        <!-- appending from loginCheck.js -->
     </div>
 
     <!-- 카드 컬럼 -->
@@ -78,7 +72,7 @@
                     <div class="left">
                         <h6 class="card-subtitle text-muted">
                             <i class="fa fa-heart" aria-hidden="true">
-                                <span id="likeCount" style="margin-right: 15px">
+                                <span id="likeCount" style="margin-right: 15px" onclick="openModal()">
                                     <!-- '좋아요' 수 출력하기 -->
                                     {% for count in like_count %}
                                     {% if count['placeName'] == placeName %}
@@ -121,16 +115,17 @@
         {% endfor %}
     </div>
 
+    <!-- 좋아요 한 닉네임 -->
     <div id="modal" class="modal-overlay">
         <div class="modal-window">
             <div class="title">
-                Likes
+                좋아요
                 <div onclick='closeModal()' class="close-area">X</div>
                 <hr>
             </div>
             <div class="content">
                 {# 모달내용창#}
-                {# {% for list in liked_lists %}#}
+                {# {% for email in email_list %}#}
                 {# <p><i class="fa fa-heart" aria-hidden="true" style="margin-right: 10px"></i>ysong0504@gmail.com</p>#}
                 {# <p><i class="fa fa-heart" aria-hidden="true" style="margin-right: 10px"></i>{{
                     list['likedUser'][0]['email'] }}</p>#}
@@ -138,6 +133,12 @@
             </div>
         </div>
     </div>
+
 </body>
+
+<!-- loginCheck.js -->
+<!-- 로드가 다 완료되고 나서 append 합니다. -->
+<script type=text/javascript src="{{
+        url_for('static', filename='js/loginCheck.js') }}"></script>
 
 </html>

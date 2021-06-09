@@ -1,23 +1,23 @@
 
 $(document).ready(function () {
-           $('#modal')[0].style.display = 'none'
-        })
+    $('#modal')[0].hide()
+})
 
 
 // 좋아요 리스트 모달 창 열기
 function openModal(placeName) {
 
-    $.ajax({
-        type: "POST",
-        url: "/likedlist",
-        data: {
-            placeName_give: placeName
-        },
-        success: function (response) {
-            console.log(response[likedUser])
-            let temp_html = ``
-        }
-    })
+    // $.ajax({
+    //     type: "POST",
+    //     url: "/likedlist",
+    //     data: {
+    //         placeName_give: placeName
+    //     },
+    //     success: function (response) {
+    //         console.log(response[likedUser])
+    //         let temp_html = ``
+    //     }
+    // })
 
     $('#modal')[0].style.display = 'flex'
 }
