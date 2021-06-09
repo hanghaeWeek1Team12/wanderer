@@ -1,6 +1,6 @@
 
 $(document).ready(function () {
-    $('#modal')[0].hide()
+    $('#modal')[0].style.display = 'none'
 })
 
 
@@ -33,3 +33,7 @@ function closeModal() {
 
 }
 
+// 작은 모달창
+function messageModal(msg) {
+    $('#modal')[0].style.display = 'none'
+}

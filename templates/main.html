@@ -47,6 +47,10 @@
     <!-- modal.js -->
     <script type=text/javascript src="{{
                 url_for('static', filename='js/modal.js') }}"></script>
+
+    <!-- likedList.js -->
+    <script type=text/javascript src="{{
+        url_for('static', filename='js/likedList.js') }}"></script>
 </head>
 
 <body>
@@ -72,7 +76,8 @@
                     <div class="left">
                         <h6 class="card-subtitle text-muted">
                             <i class="fa fa-heart" aria-hidden="true">
-                                <span id="likeCount" style="margin-right: 15px" onclick="openModal()">
+                                <span id="likeCount" style="margin-right: 15px"
+                                    onclick="likedList('{{placeName}}'); openModal();">
                                     <!-- '좋아요' 수 출력하기 -->
                                     {% for count in like_count %}
                                     {% if count['placeName'] == placeName %}
@@ -113,23 +118,30 @@
             </div>
         </div>
         {% endfor %}
+
+        <!-- fake grid item -->
+    </div class="flex-grid-item">
+    </div class="flex-grid-item">
+    </div class="flex-grid-item">
+    </div class="flex-grid-item">
+    </div class="flex-grid-item">
+    </div class="flex-grid-item">
     </div>
 
     <!-- 좋아요 한 닉네임 -->
-    <div id="modal" class="modal-overlay">
+    <div id="modal" class="modal-overlay" onclick='closeModal()'>
         <div class="modal-window">
             <div class="title">
                 좋아요
-                <div onclick='closeModal()' class="close-area">X</div>
+                <div onclick='closeModal()' class="close-area"><i class="fas fa-times"></i></div>
                 <hr>
             </div>
             <div class="content">
-                {# 모달내용창#}
-                {# {% for email in email_list %}#}
-                {# <p><i class="fa fa-heart" aria-hidden="true" style="margin-right: 10px"></i>ysong0504@gmail.com</p>#}
-                {# <p><i class="fa fa-heart" aria-hidden="true" style="margin-right: 10px"></i>{{
-                    list['likedUser'][0]['email'] }}</p>#}
-                {# {% endfor %}#}
+                <p id="email-line">
+                    <i class="fa fa-heart heart" aria-hidden="true" style="margin-right: 10px"></i>
+                    ysong0504@gmail.com
+                </p>
+                <p><i class="fa fa-heart heart" aria-hidden="true" style="margin-right: 10px"></i></p>
             </div>
         </div>
     </div>

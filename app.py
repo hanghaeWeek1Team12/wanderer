@@ -204,7 +204,7 @@ def sign_up():
     return {'res': True, 'msg': "회원가입 되었습니다."}
 
 
-# 좋아요 확인하기
+# 장소 좋아요
 @app.route("/like", methods=['POST'])
 def like_place():
     # cookie 'jwt'에서 이메일 받기
@@ -241,19 +241,13 @@ def like_place():
 
 
 # '좋아요'누른 유저리스트 출력
-# @ app.route("/likedlist", methods=['POST'])
-# def likedUser_list():
-#     placeName_receive = request.form['placeName_give']
-#     lists = list(db.place.find(
-#         {"placeName": placeName_receive}, {'_id': 0, 'likedUser': 1}))
-#     # nickname_list = list(db.user.find({"placeName": placeName_receive}, {'_id': 0, 'likedUser': 1}))
+@ app.route("/likedList", methods=['POST'])
+def liked_list():
+    placeName = request.form['placeName']
 
-#     # print(lists[0]['likedUser'][0]['email'])
-#     # for l in lists:
-#     #     print(l['likedUser'][0]['email'])
-
-#     # return {"likedlists": lists}
-#     return render_template("main.html")
+    likedUser = db.place.find_one({"placeName": placeName}, {
+                                  '_id': 0, 'likedUser': 1})
+    return {'res': True, 'msg': "해당 장소를 좋아요 한사람들이 출력됩니다.", 'val': likedUser['likedUser']}
 
 
 @ app.route("/upload", methods=["POST"])
