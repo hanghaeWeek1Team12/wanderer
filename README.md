@@ -80,8 +80,15 @@
             * method = post
             * request = {imgsrc="", placeName = "", loaction = ""}
             * cookie = {'jwt' : JWT}
-            * response = {res=True, msg="", val=""}
+            * response = {res=True, msg="업로드가 완료되었습니다."}
             * 기능 = 장소를 업로드한다.
+
+        * /deletePlace
+            * method = post
+            * request = {placeName=""}
+            * cookie = {'jwt' : JWT}
+            * response = {res=True, msg="삭제가 완료되었습니다."}
+            * 기능 = 장소를 삭제합니다.
 
         * /like
             * method = post

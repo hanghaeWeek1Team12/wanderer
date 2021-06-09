@@ -2,28 +2,75 @@
 /* header */
 .header {
 	width: 100%;
-	height : 30vw;
-	max-height: 350px;
 	text-align: center;
+
+	position: sticky;
+    top:0;
+	background-color: white;
+	z-index: 1;
+	padding-bottom: 10px;
+
+	background: url("/static/img/main_header.jpg"), linear-gradient(#000000, #e1e1e1) no-repeat center center fixed;
+	-webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
 }
 .header .biglogo{
-	padding-top: 50px;
-	font-size: max(8vw, 43px);
+	padding-top: 20px;
+	font-size: min(7vw, 90px);
     font-family: 'Do Hyeon';
-    color: rgb(100, 100, 100);
+    color: rgb(230, 230, 230);
 }
+
+/* header buttons */
 .header #login{
 	position: absolute;
   	right: 20px;
 	top: 10px;
 }
-
 .header #signup{
 	position: absolute;
   	right: 100px;
 	top: 10px;
 }
+.header #upload{
+	position: absolute;
+  	right: 196px;
+	top: 10px;
+}
+.header #dropdown{
+	display: none;
+	position: absolute;
+  	right: 20px;
+	top: 5vw;
+	z-index: 1;
+}
+/* header mobile dropdown */
+.header #dropdown-content{
+	display: none;
+	flex-direction: column;
+	position: absolute;
+  	right: 10px;
+	top: calc(5vw + 30px);
+	padding: 10px;
+	background-color: white;
+	border-radius: 5px;
+}
+.header #dropdown-content button{
+	margin-top: 5px;
+}
 
+.header #dropdown:hover + #dropdown-content { 
+	display: flex;
+}
+
+@media screen and (max-width: 960px) {
+	.header #login { display: none; } 
+	.header #signup { display: none; } 
+	.header #upload { display: none; } 
+	.header #dropdown { display: block; } 
+}
 /* cards */
 .card {
 	display: inline-block;
@@ -39,8 +86,9 @@
 }
 
 .card-top{
-	width: 100%;
+	width: 90%;
 	display: flex;
+	margin: auto;
 }
 .card-top .left{
 	width: 80%;
@@ -53,10 +101,14 @@
 .card-top .right .fa-heart-o{
 	margin: auto;
 }
+.card-top .right .fa-heart{
+	margin: auto;
+	color: salmon;
+}
 .card-title1{
 	margin-bottom: 2px;
 }
-.card-subtitle span, .fa-heart{
+.card-subtitle span, .card-subtitle .fa-heart{
 	font-size: 11px;
 }
 .card-subtitle .fa-map-marker{
@@ -68,6 +120,8 @@
 	display: flex;
 	flex-wrap: wrap;
 	justify-content: center;
+	padding-top: 5vh;
+	background-color: rgb(255, 255, 255);
 }
 .flex-grid-item {
 	flex-grow: 1;
