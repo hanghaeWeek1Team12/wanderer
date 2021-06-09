@@ -61,15 +61,15 @@
 	margin-top: 5px;
 }
 
-.header #dropdown:hover + #dropdown-content { 
+.header #dropdown:hover + #dropdown-content {
 	display: flex;
 }
 
 @media screen and (max-width: 960px) {
-	.header #login { display: none; } 
-	.header #signup { display: none; } 
-	.header #upload { display: none; } 
-	.header #dropdown { display: block; } 
+	.header #login { display: none; }
+	.header #signup { display: none; }
+	.header #upload { display: none; }
+	.header #dropdown { display: block; }
 }
 /* cards */
 .card {
@@ -80,7 +80,7 @@
 	display:block;
     margin:auto;
 	padding-bottom: 10px;
-	
+
     width:  90%;
     height: 230px;
 }
