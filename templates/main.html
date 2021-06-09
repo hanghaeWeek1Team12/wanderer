@@ -59,10 +59,12 @@
     <!-- 카드 컬럼 -->
     <div class="flex-grid">
         {% for placelist in lists %}
+
         {# 서버에서 받아온 데이터들 변수에 할당#}
         {% set imageURL = placelist['imageURL'] %}
         {% set placeName = placelist['placeName'] %}
         {% set location = placelist['location'] %}
+        {% set likedUser = placelist['likedUser']  %}
 
         <div class="flex-grid-item">
             <div class="card">
@@ -87,24 +89,27 @@
                             {{ placeName }}
                         </h5>
                         <h6 class="card-subtitle text-muted">
-                            <i class="fa fa-map-marker" aria-hidden="true"><span style="margin-left: 10px">{{ location
-                                    }}</span></i>
+                            <i class="fa fa-map-marker" aria-hidden="true"><span style="margin-left: 10px">{{ location }}</span></i>
                         </h6>
                     </div>
                     <div class="right">
-                        {% for list in liked_list %}
-                        {% if list['placeName'] == placeName %}
-                        <!-- 좋아요'누른 내역이 있을시 색깔있는 하트 출력-->
-                        <i onclick="toggle_like('{{ placeName }}','unlike')" class="fa fa-heart fa-lg"
-                            aria-hidden="true"></i>
-                        {% else %}
-                        <!-- 좋아요'누른 내역이 있을시 색깔있는 하트 출력-->
-                        <i onclick="toggle_like('{{ placeName }}','like')" class="fa fa-heart-o fa-lg"
-                            aria-hidden="true"></i>
-                        {% endif %}
+##################################################################
+                         {% for list in liked_list %}
+                            {% if list['placeName'] == placeName %}
+                                <!-- 좋아요'누른 내역이 있을시 색깔있는 하트 출력-->
+                                <i onclick="toggle_like('{{ placeName }}','unlike')" class="fa fa-heart fa-lg" aria-hidden="true"></i>
+                                {% break %}
+                            {% else %}
+                                <!-- 좋아요'누른 내역이 없을 시 빈 하트 출력-->
+                                <i onclick="toggle_like('{{ placeName }}','like')" class="fa fa-heart-o fa-lg" aria-hidden="true"></i>
+                                {% break %}
+                            {% endif %}
                         {% endfor %}
+
+##################################################################
+
                         <!-- likedUser 리스트가 없을 시 빈 하트 출력 -->
-                        {% if liked_list.count() == 0 %}
+                        {% if liked_list | length == 0 %}
                         <i onclick="toggle_like('{{ placeName }}','like')" class="fa fa-heart-o fa-lg"
                             aria-hidden="true"></i>
                         {% endif %}

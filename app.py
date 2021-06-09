@@ -11,6 +11,7 @@ client = MongoClient('localhost', 27017)
 db = client.wanderer
 
 app = Flask(__name__)
+app.jinja_env.add_extension('jinja2.ext.loopcontrols')
 app.config['SECRET_KEY'] = '452325d3c00449738b52eab18c63edf7'
 app.config['ALGORITHM'] = 'HS256'
 
@@ -74,35 +75,31 @@ def get_email_from_jwt(jwt_token):
 # static url
 @app.route('/', methods=["GET"])
 def static_home():
+    # 현재 로그인계정 가져오기
     jwt = request.cookies.get('jwt')
-
     email_receive = get_email_from_jwt(jwt)
 
-    # 현재 로그인한 계정이 '좋아요'른 누른 여행지 출력
+    # 해당 계정이 '좋아요'한 여행지 확인
     if email_receive != None or email_receive != '':
-        liked_list = db.place.find({"likedUser": [{"email": email_receive}]}, {
-                                   '_id': 0, 'placeName': 1})
+        liked_list = list(db.place.find({"likedUser":
+                                         {'$elemMatch': {'email': email_receive}}},
+                                        {'_id': 0, 'placeName': 1}))
 
-    # 여행지별 좋아요 갯수 출력
-    like_count = list(db.place.aggregate([
-        {
-            '$project': {
-                '_id': 0,
-                'placeName': 1,
-                'totalCount': {'$size': ['$likedUser']}
-            }
-        }
-    ]))
 
     # 여행지 리스트 출력
-    lists = list(db.place.find({}, {'_id': False}))
+    tour_lists = list(db.place.find({}, {'_id': False}))
 
-    return render_template("main.html", lists=lists, liked_list=liked_list, like_count=like_count)
+    return render_template("main.html", lists=tour_lists, liked_list=liked_list, currentUser = email_receive)
 
 
 @app.route('/signup', methods=["GET"])
 def static_signup():
     return render_template('signup.html')
+
+
+@app.route('/main', methods=["GET"])
+def static_main():
+    return render_template('main.html')
 
 
 @app.route('/login', methods=["GET"])
@@ -218,6 +215,7 @@ def like_place():
     placeName_receive = request.form['placeName_give']
     status = request.form['status']
 
+
     # 좋아요 취소 (pull을 이용하여 likedUser에서 해당 이메일 제거)
     print(status)
     print(email_receive)
@@ -226,8 +224,8 @@ def like_place():
                             {'$pull': {
                                 "likedUser": {"email": email_receive}
                             }
-        }
-        )
+                            }
+                            )
         return {'res': True, 'msg': "좋아요를 취소하셨습니다."}
     # 좋아요 추가 (push로 likedUser에서 해당 이메일 추가)
     else:
@@ -235,29 +233,14 @@ def like_place():
                             {'$push': {
                                 "likedUser": {"email": email_receive}
                             }
-        }
-        )
+                            }
+                            )
         return {'res': True, 'msg': "좋아요가 완료되었습니다."}
 
 
-# '좋아요'누른 유저리스트 출력
-# @ app.route("/likedlist", methods=['POST'])
-# def likedUser_list():
-#     placeName_receive = request.form['placeName_give']
-#     lists = list(db.place.find(
-#         {"placeName": placeName_receive}, {'_id': 0, 'likedUser': 1}))
-#     # nickname_list = list(db.user.find({"placeName": placeName_receive}, {'_id': 0, 'likedUser': 1}))
 
-#     # print(lists[0]['likedUser'][0]['email'])
-#     # for l in lists:
-#     #     print(l['likedUser'][0]['email'])
-
-#     # return {"likedlists": lists}
-#     return render_template("main.html")
-
-
-@ app.route("/upload", methods=["POST"])
-@ login_required
+@app.route("/upload", methods=["POST"])
+@login_required
 def upload():
     imgsrc = request.form["imgsrc"]
     placeName = request.form["placeName"]
@@ -273,11 +256,6 @@ def upload():
         return {'res': False, 'msg': "장소 위치를 입력해주세요."}
     if (jwt == '' or jwt == None or email == '' or email == None):
         return {'res': False, 'msg': "다시 로그인해주세요."}
-    #
-    saved_place = db.place.find_one({'placeName': placeName}, {'_id': False})
-    print(saved_place)
-    if (saved_place != None):
-        return {'res': False, 'msg': "같은 장소가 이미 존재합니다."}
 
     # db 안에 입력합니다.
     db.place.insert_one({
@@ -288,23 +266,6 @@ def upload():
         'createdUser': email
     })
     return {'res': True, 'msg': "업로드가 완료되었습니다."}
-
-
-@app.route("/deletePlace", methods=["POST"])
-@login_required
-def delete_place():
-    placeName = request.form["placeName"]
-    jwt = request.cookies.get("jwt")
-
-    saved_place = db.place.find_one({'placeName': placeName}, {'_id': False})
-
-    # 이메일이 일치하지 않는다면
-    if saved_place['createdUser'] != get_email_from_jwt(jwt):
-        return {'res': True, 'msg': "생성자가 아닙니다."}
-
-    # 이메일이 일치한다면
-    db.place.delete_one({'placeName': placeName})
-    return {'res': True, 'msg': "삭제가 완료되었습니다."}
 
 
 if __name__ == "__main__":
