@@ -224,20 +224,22 @@ def like_place():
 
     # 좋아요 취소 (pull을 이용하여 likedUser에서 해당 이메일 제거)
     if status == 'unlike':
-        db.place.update({"placeName": placeName_receive},
+        db.place.update_one({"placeName": placeName_receive},
                         {'$pull': {
                             "likedUser": {"email": email_receive}
                         }
         }
         )
+        return {'res': True, 'msg': "좋아요를 취소하셨습니다."}
     # 좋아요 추가 (push로 likedUser에서 해당 이메일 추가)
-        db.place.update({"placeName": placeName_receive},
+    else:
+        db.place.update_one({"placeName": placeName_receive},
                         {'$push': {
                             "likedUser": {"email": email_receive}
                         }
         }
         )
-    return {'res': True, 'msg': "좋아요가 완료되었습니다."}
+        return {'res': True, 'msg': "좋아요가 완료되었습니다."}
 
 
 @app.route("/upload", methods=["POST"])
