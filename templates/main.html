@@ -51,6 +51,10 @@
     <!-- likedList.js -->
     <script type=text/javascript src="{{
         url_for('static', filename='js/likedList.js') }}"></script>
+
+    <!-- deletePlace.js -->
+    <script type=text/javascript src="{{
+        url_for('static', filename='js/deletePlace.js') }}"></script>
 </head>
 
 <body>
@@ -93,7 +97,11 @@
                         </h6>
                     </div>
                     <div class="right">
-                        {% if placelist['liked'] %}
+                        {% if placelist['created'] %}
+                        <!-- 본인이 만들었을 경우 삭제 버튼 출력 -->
+                        <i onclick="deletePlace(`{{ placelist['placeName'] }}`)" class="far fa-trash-alt fa-lg"
+                            aria-hidden="true"></i>
+                        {% elif placelist['liked'] %}
                         <!-- 좋아요'누른 내역이 있을시 색깔있는 하트 출력-->
                         <i onclick="toggle_like(`{{ placelist['placeName'] }}`,'unlike')" class="fa fa-heart fa-lg"
                             aria-hidden="true"></i>

@@ -104,11 +104,10 @@
 	display: flex;
 	align-content: center;
 }
-.card-top .right .fa-heart-o{
+.card-top .right .fa-heart, .card-top .right .fa-heart-o, .card-top .right .fa-trash-alt{
 	margin: auto;
 }
 .card-top .right .fa-heart{
-	margin: auto;
 	color: salmon;
 }
 .card-title1{

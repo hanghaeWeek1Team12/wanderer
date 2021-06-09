@@ -83,6 +83,11 @@ def static_home():
 
     for liked_place in tour_lists:
         liked_place['liked'] = False
+        if (liked_place['createdUser'] == email_receive):
+            liked_place['created'] = True
+        else:
+            liked_place['created'] = False
+
         for liked_user in liked_place['likedUser']:
             if (email_receive == liked_user['email']):
                 liked_place['liked'] = True
@@ -283,11 +288,19 @@ def delete_place():
     placeName = request.form["placeName"]
     jwt = request.cookies.get("jwt")
 
+    # jwt 을 보내지 않았다면
+    if jwt == '' or jwt == None:
+        return {'res': False, 'msg': "로그인 되어있지 않습니다."}
+
+    # placeName 을 보내지 않았다면
+    if placeName == '' or placeName == None:
+        return {'res': False, 'msg': "장소를 보내지 않았습니다."}
+
     saved_place = db.place.find_one({'placeName': placeName}, {'_id': False})
 
     # 이메일이 일치하지 않는다면
     if saved_place['createdUser'] != get_email_from_jwt(jwt):
-        return {'res': True, 'msg': "생성자가 아닙니다."}
+        return {'res': False, 'msg': "생성자가 아닙니다."}
 
     # 이메일이 일치한다면
     db.place.delete_one({'placeName': placeName})
