@@ -5,8 +5,7 @@ function upload() {
         data: {
             imgsrc: $('#imgsrc').val(),
             placeName: $('#placeName').val(),
-            loaction: $('#location').val(),
-            jwt: getCookie('jwt')
+            loaction: $('#location').val()
         },
         success:
             function (response) {

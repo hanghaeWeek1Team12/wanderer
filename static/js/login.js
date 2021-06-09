@@ -1,4 +1,4 @@
-// 쿠키가 존재
+// 로그인 쿠키가 존재한다면
 // if (getCookie("jwt") != null) {
 //     window.location.href = '../main';
 // }

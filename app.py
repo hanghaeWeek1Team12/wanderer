@@ -14,12 +14,89 @@ app = Flask(__name__)
 app.config['SECRET_KEY'] = '452325d3c00449738b52eab18c63edf7'
 app.config['ALGORITHM'] = 'HS256'
 
+
+# jwt
+# 이 annotation(@)이 사용되면 쿠키에 jwt를 확인해주세요
+def login_required(f):
+    @wraps(f)
+    def decorated_function(*args, **kwargs):
+        # jwt를 쿠키에서 jwt로 받습니다.
+        jwt_token = request.cookies.get("jwt")
+        # 토큰을 받았다면
+        if jwt_token is not None:
+            try:
+                # jwt 토큰이 유효한지 확인
+                payload = jwt.decode(
+                    jwt_token, app.config["SECRET_KEY"], app.config['ALGORITHM'])
+                # 유효하지 않다면
+            except jwt.InvalidTokenError:
+                payload = None
+
+            if payload is None:
+                return {'res': False, 'msg': "토큰이 유효하지 않습니다."}
+
+            # def login()에서 페이로드의 sub에 email을 넣었습니다.
+            email = payload["sub"]
+
+            # 이어서 이메일이 일치하는지 확인
+            # db 안에 같은 닉네임이 존재하는지 확인
+            db_email_match = db.user.find_one({'email': email}, {'_id': False})
+            if db_email_match is None:
+                return {'res': False, 'msg': "토큰이 유효하지 않습니다."}
+        else:
+            return {'res': False, 'msg': "토큰이 유효하지 않습니다."}
+        return f(*args, **kwargs)
+    return decorated_function
+
+
+# 이 function은 jwt에서 이메일을 추출합니다.
+# return = '' / 'email@web.com'
+def get_email_from_jwt(jwt_token):
+    # 토큰을 받았다면
+    if jwt_token is not None:
+        try:
+            # jwt 토큰이 유효한지 확인
+            payload = jwt.decode(
+                jwt_token, app.config["SECRET_KEY"], app.config['ALGORITHM'])
+            # 유효하지 않다면
+        except jwt.InvalidTokenError:
+            payload = None
+
+        if payload is None:
+            return ''
+
+        # def login()에서 페이로드의 sub에 email을 넣었습니다.
+        email = payload["sub"]
+        return email
+
+
 # static url
-
-
 @app.route('/', methods=["GET"])
-def home():
-    return render_template('signup.html')
+def static_home():
+    jwt = request.cookies.get('jwt')
+
+    email_receive = get_email_from_jwt(jwt)
+
+    # 현재 로그인한 계정이 '좋아요'른 누른 여행지 출력
+    if email_receive != None or email_receive != '':
+        liked_list = db.place.find({"likedUser": [{"email": email_receive}]},
+                                   {'_id': 0, 'placeName': 1})
+
+    # 여행지별 좋아요 갯수 출력
+    like_count = list(db.place.aggregate([
+        {
+            '$project': {
+                '_id': 0,
+                'placeName': 1,
+                'totalCount': {'$size': ['$likedUser']}
+            }
+        }
+    ]))
+
+    # 여행지 리스트 출력
+    lists = list(db.place.find({}, {'_id': False}))
+
+    return render_template("main.html", lists=lists, liked_list=liked_list, like_count=like_count)
 
 
 @app.route('/signup', methods=["GET"])
@@ -35,15 +112,15 @@ def static_main():
 @app.route('/login', methods=["GET"])
 def static_login():
     return render_template('login.html')
-# api url
 
 
 @app.route('/upload', methods=["GET"])
+@login_required
 def static_upload():
     return render_template('upload.html')
+
+
 # api url
-
-
 @app.route("/login", methods=["POST"])
 def login():
     email = request.form["email"]
@@ -131,102 +208,22 @@ def sign_up():
     return {'res': True, 'msg': "회원가입 되었습니다."}
 
 
-# 이 annotation(@)이 사용되면 body의 jwt를 넣어 보내주세요.
-def login_required(f):
-    @wraps(f)
-    def decorated_function(*args, **kwargs):
-        # jwt를 body에서 jwt로 받습니다.
-        jwt_token = request.form["jwt"]
-        # 토큰을 받았다면
-        if jwt_token is not None:
-            try:
-                # jwt 토큰이 유효한지 확인
-                payload = jwt.decode(
-                    jwt_token, app.config["SECRET_KEY"], app.config['ALGORITHM'])
-                # 유효하지 않다면
-            except jwt.InvalidTokenError:
-                payload = None
-
-            if payload is None:
-                return {'res': False, 'msg': "토큰이 유효하지 않습니다."}
-
-            # def login()에서 페이로드의 sub에 email을 넣었습니다.
-            email = payload["sub"]
-
-            # 이어서 이메일이 일치하는지 확인
-            # db 안에 같은 닉네임이 존재하는지 확인
-            db_email_match = db.user.find_one({'email': email}, {'_id': False})
-            if db_email_match is None:
-                return {'res': False, 'msg': "토큰이 유효하지 않습니다."}
-        else:
-            return {'res': False, 'msg': "토큰이 유효하지 않습니다."}
-        return f(*args, **kwargs)
-    return decorated_function
-
-
-# 이 function은 jwt에서 이메일을 추출합니다.
-def get_email_from_jwt(jwt_token):
-    # 토큰을 받았다면
-    if jwt_token is not None:
-        try:
-            # jwt 토큰이 유효한지 확인
-            payload = jwt.decode(
-                jwt_token, app.config["SECRET_KEY"], app.config['ALGORITHM'])
-            # 유효하지 않다면
-        except jwt.InvalidTokenError:
-            payload = None
-
-        if payload is None:
-            return {'res': False, 'msg': "토큰이 유효하지 않습니다."}
-
-        # def login()에서 페이로드의 sub에 email을 넣었습니다.
-        email = payload["sub"]
-        return email
-
-
-@app.route("/placelist", methods=["POST"])
-@login_required
-def place_list():
-    return "완료"
-
-
-# 여행지 리스트 출력
-@app.route("/placelist")
-def placelist():
-    # 테스트용
-    email_receive = "dohyung97022@gmail.com"
-
-    # 현재 로그인한 계정이 '좋아요'른 누른 여행지 출력
-    if email_receive:
-        liked_list = db.place.find({"likedUser": [{"email": email_receive}]},
-                                   {'_id': 0, 'placeName': 1})
-
-    # 여행지별 좋아요 갯수 출력
-    like_count = list(db.place.aggregate([
-        {
-            '$project': {
-                '_id': 0,
-                'placeName': 1,
-                'totalCount': {'$size': ['$likedUser']}
-            }
-        }
-    ]))
-
-    # 여행지 리스트 출력
-    lists = list(db.place.find({}, {'_id': False}))
-
-    return render_template("main.html", lists=lists, liked_list=liked_list, like_count=like_count)
-
-
 # 좋아요 확인하기
 @app.route("/like", methods=['POST'])
 def like_place():
+    # cookie 'jwt'에서 이메일 받기
+    jwt = request.cookies.get('jwt')
+    email_receive = get_email_from_jwt(jwt)
+    # 이메일을 받지 못하였다면
+    if email_receive == '' or email_receive == None:
+        return {'res': False, 'msg': "로그인되어있지 않습니다."}
+
+    # post body 받기
     placeName_receive = request.form['placeName_give']
-    email_receive = request.form['email_give']
-    status_receive = request.form['status_give']
+    status = request.form['status']
 
     # 좋아요 취소 (pull을 이용하여 likedUser에서 해당 이메일 제거)
-    if status_receive == 'unlike':
+    if status == 'unlike':
         db.place.update({"placeName": placeName_receive},
                         {'$pull': {
                             "likedUser": {"email": email_receive}
@@ -240,16 +237,17 @@ def like_place():
                         }
         }
         )
-    return render_template("main.html")
+    return {'res': True, 'msg': "좋아요가 완료되었습니다."}
 
 
-@ app.route("/upload", methods=["POST"])
-@ login_required
+@app.route("/upload", methods=["POST"])
+@login_required
 def upload():
     imgsrc = request.form["imgsrc"]
     placeName = request.form["placeName"]
     loaction = request.form["loaction"]
-    jwt = request.form["jwt"]
+    jwt = request.cookies.get("jwt")
+    email = get_email_from_jwt(jwt)
 
     if (imgsrc == ''):
         return {'res': False, 'msg': "이미지 url을 입력해주세요."}
@@ -257,7 +255,7 @@ def upload():
         return {'res': False, 'msg': "장소 명칭을 입력해주세요."}
     if (loaction == ''):
         return {'res': False, 'msg': "장소 위치를 입력해주세요."}
-    if (jwt == '' or jwt == None):
+    if (jwt == '' or jwt == None or email == '' or email == None):
         return {'res': False, 'msg': "다시 로그인해주세요."}
 
     # db 안에 입력합니다.
@@ -266,13 +264,13 @@ def upload():
         'imageURL': imgsrc,
         'location': loaction,
         'likedUser': [],
-        'createdUser': get_email_from_jwt(jwt)
+        'createdUser': email
     })
     return {'res': True, 'msg': "업로드가 완료되었습니다."}
 
 
 if __name__ == "__main__":
-    app.run('0.0.0.0', port=5000, debug=True)
+    app.run('0.0.0.0', port=8080, debug=True)
 
 
 # 연습장

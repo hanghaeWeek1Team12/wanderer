@@ -22,9 +22,9 @@
         crossorigin="anonymous"></script>
     <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
 
-    <!-- logoToMain.js -->
+    <!-- toPath.js -->
     <script type=text/javascript src="{{
-            url_for('static', filename='js/logoToMain.js') }}"></script>
+            url_for('static', filename='js/toPath.js') }}"></script>
 
     <!-- css -->
     <link rel="stylesheet" href="../static/styles/main.css">
@@ -42,8 +42,9 @@
 <body>
     <!-- 상단 로고 -->
     <div class="header">
-        <p class="biglogo" onclick="logoToMain()">W a n d e r e r</p>
-        <button type="button" class="btn btn-primary">로그인</button>
+        <p class="biglogo" onclick="toPath('/')">W a n d e r e r</p>
+        <button type="button" class="btn btn-primary" id="login" onclick="toPath('/login')">로그인</button>
+        <button type="button" class="btn btn-secondary" id="signup" onclick="toPath('/signup')">회원가입</button>
     </div>
 
     <!-- 카드 컬럼 -->
@@ -58,7 +59,8 @@
         {# {% for i in range(0,13) %}#}
         <div class="flex-grid-item">
             <div class="card">
-                <img class="card-image-top" src="{{ imageURL }}" alt="imageURL">
+                <img class="card-image-top" src="{{ imageURL }}" onerror="this.src = '/static/img/img_not_found.PNG';"
+                    alt="imageURL">
                 <div class="card-top">
                     <div class="left">
                         <h6 class="card-subtitle text-muted">
