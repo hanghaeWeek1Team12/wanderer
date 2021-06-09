@@ -74,35 +74,31 @@ def get_email_from_jwt(jwt_token):
 # static url
 @app.route('/', methods=["GET"])
 def static_home():
+    # 현재 로그인계정 가져오기
     jwt = request.cookies.get('jwt')
-
     email_receive = get_email_from_jwt(jwt)
 
-    # 현재 로그인한 계정이 '좋아요'른 누른 여행지 출력
-    if email_receive != None or email_receive != '':
-        liked_list = db.place.find({"likedUser": [{"email": email_receive}]}, {
-                                   '_id': 0, 'placeName': 1})
+    # 해당 계정이 '좋아요'한 여행지 확인
+    tour_lists = list(db.place.find({}, {'_id': False}))
 
-    # 여행지별 좋아요 갯수 출력
-    like_count = list(db.place.aggregate([
-        {
-            '$project': {
-                '_id': 0,
-                'placeName': 1,
-                'totalCount': {'$size': ['$likedUser']}
-            }
-        }
-    ]))
+    for liked_place in tour_lists:
+        liked_place['liked'] = False
+        for liked_user in liked_place['likedUser']:
+            if (email_receive == liked_user['email']):
+                liked_place['liked'] = True
+                break
 
-    # 여행지 리스트 출력
-    lists = list(db.place.find({}, {'_id': False}))
-
-    return render_template("main.html", lists=lists, liked_list=liked_list, like_count=like_count)
+    return render_template("main.html", lists=tour_lists)
 
 
 @app.route('/signup', methods=["GET"])
 def static_signup():
     return render_template('signup.html')
+
+
+@app.route('/main', methods=["GET"])
+def static_main():
+    return render_template('main.html')
 
 
 @app.route('/login', methods=["GET"])
@@ -267,11 +263,6 @@ def upload():
         return {'res': False, 'msg': "장소 위치를 입력해주세요."}
     if (jwt == '' or jwt == None or email == '' or email == None):
         return {'res': False, 'msg': "다시 로그인해주세요."}
-    #
-    saved_place = db.place.find_one({'placeName': placeName}, {'_id': False})
-    print(saved_place)
-    if (saved_place != None):
-        return {'res': False, 'msg': "같은 장소가 이미 존재합니다."}
 
     # db 안에 입력합니다.
     db.place.insert_one({
@@ -282,23 +273,6 @@ def upload():
         'createdUser': email
     })
     return {'res': True, 'msg': "업로드가 완료되었습니다."}
-
-
-@app.route("/deletePlace", methods=["POST"])
-@login_required
-def delete_place():
-    placeName = request.form["placeName"]
-    jwt = request.cookies.get("jwt")
-
-    saved_place = db.place.find_one({'placeName': placeName}, {'_id': False})
-
-    # 이메일이 일치하지 않는다면
-    if saved_place['createdUser'] != get_email_from_jwt(jwt):
-        return {'res': True, 'msg': "생성자가 아닙니다."}
-
-    # 이메일이 일치한다면
-    db.place.delete_one({'placeName': placeName})
-    return {'res': True, 'msg': "삭제가 완료되었습니다."}
 
 
 if __name__ == "__main__":
