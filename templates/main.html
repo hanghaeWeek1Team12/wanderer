@@ -58,8 +58,8 @@
     <div class="header">
         <p class="biglogo">W a n d e r e r</p>
         <!-- appending from loginCheck -->
-        <button type="button" class="btn btn-light" id="dropdown"><i class="fas fa-caret-down"></i></button>
         <div id="dropdown-content">
+            <button type="button" class="btn btn-light dropdown-button"><i class="fas fa-caret-down fa-sm"></i></button>
             <!-- appending from loginCheck -->
         </div>
     </div>
@@ -86,6 +86,11 @@
                         <h5 class="card-title1">
                             {{ placelist['placeName'] }}
                         </h5>
+                        <h6 class="card-subtitle text-muted">
+                            <i class="fa fa-map-marker" aria-hidden="true"><span style="margin-left: 10px">{{
+                                    placelist['location']
+                                    }}</span></i>
+                        </h6>
                     </div>
                     <div class="right">
                         {% if placelist['liked'] %}
@@ -99,12 +104,6 @@
                         {% endif %}
                     </div>
                 </div>
-
-                <h6 class="card-subtitle text-muted">
-                    <i class="fa fa-map-marker" aria-hidden="true"><span style="margin-left: 10px">{{
-                            placelist['location']
-                            }}</span></i>
-                </h6>
             </div>
         </div>
         {% endfor %}
