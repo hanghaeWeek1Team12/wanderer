@@ -46,6 +46,7 @@ def login_required(f):
         else:
             return {'res': False, 'msg': "토큰이 유효하지 않습니다."}
         return f(*args, **kwargs)
+
     return decorated_function
 
 
@@ -81,6 +82,7 @@ def static_home():
     if email_receive != None or email_receive != '':
         liked_list = db.place.find({"likedUser": [{"email": email_receive}]},
                                    {'_id': 0, 'placeName': 1})
+        print(liked_list)
 
     # 여행지별 좋아요 갯수 출력
     like_count = list(db.place.aggregate([
@@ -223,23 +225,40 @@ def like_place():
     status = request.form['status']
 
     # 좋아요 취소 (pull을 이용하여 likedUser에서 해당 이메일 제거)
+    print(status)
+    print(email_receive)
     if status == 'unlike':
         db.place.update_one({"placeName": placeName_receive},
-                        {'$pull': {
-                            "likedUser": {"email": email_receive}
-                        }
-        }
-        )
+                            {'$pull': {
+                                "likedUser": {"email": email_receive}
+                            }
+                            }
+                            )
         return {'res': True, 'msg': "좋아요를 취소하셨습니다."}
     # 좋아요 추가 (push로 likedUser에서 해당 이메일 추가)
     else:
         db.place.update_one({"placeName": placeName_receive},
-                        {'$push': {
-                            "likedUser": {"email": email_receive}
-                        }
-        }
-        )
+                            {'$push': {
+                                "likedUser": {"email": email_receive}
+                            }
+                            }
+                            )
         return {'res': True, 'msg': "좋아요가 완료되었습니다."}
+
+
+# '좋아요'누른 유저리스트 출력
+@app.route("/likedlist", methods=['POST'])
+def likedUser_list():
+    placeName_receive = request.form['placeName_give']
+    lists = list(db.place.find({"placeName": placeName_receive}, {'_id': 0, 'likedUser': 1}))
+    # nickname_list = list(db.user.find({"placeName": placeName_receive}, {'_id': 0, 'likedUser': 1}))
+
+    # print(lists[0]['likedUser'][0]['email'])
+    # for l in lists:
+    #     print(l['likedUser'][0]['email'])
+
+    # return {"likedlists": lists}
+    return render_template("main.html")
 
 
 @app.route("/upload", methods=["POST"])
@@ -272,8 +291,7 @@ def upload():
 
 
 if __name__ == "__main__":
-    app.run('0.0.0.0', port=8080, debug=True)
-
+    app.run('0.0.0.0', port=5000, debug=True)
 
 # 연습장
 # 임의의 패스워드?

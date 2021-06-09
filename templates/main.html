@@ -6,9 +6,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Wander | Placelist</title>
 
-    <!-- logo font -->
-    <link href="https://fonts.googleapis.com/css2?family=Do+Hyeon&display=swap" rel="stylesheet">
-
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
         integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
@@ -22,12 +19,15 @@
         crossorigin="anonymous"></script>
     <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
 
-    <!-- toPath.js -->
-    <script type=text/javascript src="{{
-            url_for('static', filename='js/toPath.js') }}"></script>
-
-    <!-- css -->
+    <!-- 메인 css -->
     <link rel="stylesheet" href="../static/styles/main.css">
+
+     <!-- 모달창 css -->
+    <link rel="stylesheet" href="../static/styles/modal.css">
+
+     <!-- modal.js -->
+    <script type=text/javascript src="{{
+        url_for('static', filename='js/modal.js') }}"></script>
 
     <!-- cookie.js -->
     <script type=text/javascript src="{{
@@ -42,9 +42,8 @@
 <body>
     <!-- 상단 로고 -->
     <div class="header">
-        <p class="biglogo" onclick="toPath('/')">W a n d e r e r</p>
-        <button type="button" class="btn btn-primary" id="login" onclick="toPath('/login')">로그인</button>
-        <button type="button" class="btn btn-secondary" id="signup" onclick="toPath('/signup')">회원가입</button>
+        <h1>Wanderer</h1>
+        <button type="button" class="btn btn-primary">로그인</button>
     </div>
 
     <!-- 카드 컬럼 -->
@@ -59,19 +58,19 @@
         {# {% for i in range(0,13) %}#}
         <div class="flex-grid-item">
             <div class="card">
-                <img class="card-image-top" src="{{ imageURL }}" onerror="this.src = '/static/img/img_not_found.PNG';"
-                    alt="imageURL">
+                <img class="card-image-top" src="{{ imageURL }}" alt="imageURL">
                 <div class="card-top">
                     <div class="left">
                         <h6 class="card-subtitle text-muted">
                             <i class="fa fa-heart" aria-hidden="true">
-                                <span id="likeCount" style="margin-right: 15px">
+                                <span onclick="openModal('{{ placeName }}')" id="likeCount" style="margin-right: 15px">
                                     <!-- '좋아요' 수 출력하기 -->
                                     {% for count in like_count %}
                                     {% if count['placeName'] == placeName %}
-                                    {{ count['totalCount'] }}명이 좋아합니다.
+                                    {{ count['totalCount'] }}
                                     {% endif %}
                                     {% endfor %}
+                                    명이 좋아합니다.
                                 </span>
                             </i>
                         </h6>
@@ -85,7 +84,7 @@
                         <!-- 좋아요'누른 내역이 있을시 색깔있는 하트 출력-->
                         <i onclick="toggle_like('{{ placeName }}','unlike')" class="fa fa-heart" aria-hidden="true"></i>
                         {% else %}
-                        <!-- 좋아요'누른 내역이 있을시 색깔있는 하트 출력-->
+                        <!-- 좋아요'누른 내역이 없을 시 색깔없는 하트 출력-->
                         <i onclick="toggle_like('{{ placeName }}','like')" class="fa fa-heart-o fa-lg"
                             aria-hidden="true"></i>
                         {% endif %}
@@ -106,6 +105,26 @@
         </div>
         {% endfor %}
     </div>
+
+
+{#   ###################### 모달창  #################}
+    <div id="modal" class="modal-overlay">
+        <div class="modal-window">
+            <div class="title">
+                Likes
+                <div onclick='closeModal()' class="close-area">X</div>
+                <hr>
+            </div>
+            <div class="content">
+                {#    모달내용창#}
+{#                {% for list in liked_lists %}#}
+{#                <p><i class="fa fa-heart" aria-hidden="true" style="margin-right: 10px"></i>ysong0504@gmail.com</p>#}
+{#                <p><i class="fa fa-heart" aria-hidden="true" style="margin-right: 10px"></i>{{ list['likedUser'][0]['email'] }}</p>#}
+{#                {% endfor %}#}
+            </div>
+        </div>
+    </div>
+
 </body>
 
 </html>
