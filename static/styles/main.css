@@ -10,7 +10,7 @@
 	z-index: 1;
 	padding-bottom: 10px;
 
-	background: url("/static/img/main_header.jpg"), linear-gradient(#000000, #e1e1e1) no-repeat center center fixed;
+	background: url("/static/img/main_header.jpg"), no-repeat center center fixed;
 	-webkit-background-size: cover;
     -moz-background-size: cover;
     -o-background-size: cover;
@@ -52,16 +52,17 @@
 	flex-direction: column;
 	position: absolute;
   	right: 10px;
-	top: calc(5vw + 30px);
+	top: calc(5vw - 10px);
 	padding: 10px;
-	background-color: white;
+	padding-top: 50px;
+	background-color: rgb(255, 255, 255);
 	border-radius: 5px;
 }
 .header #dropdown-content button{
 	margin-top: 5px;
 }
 
-.header #dropdown:hover + #dropdown-content {
+.header #dropdown:focus + #dropdown-content {
 	display: flex;
 }
 

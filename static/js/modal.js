@@ -1,6 +1,6 @@
 
 // 모달 창 열기
-function openModal(placeName) {
+function openModal() {
     $('#modal')[0].style.display = 'flex'
 }
 

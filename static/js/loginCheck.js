@@ -1,4 +1,5 @@
 // 로그인 확인하기
+// .header #dropdown-content
 function loginCheck() {
     var keyValue = document.cookie.match('(^|;) ?jwt=([^;]*)(;|$)');
     keyValue = keyValue ? keyValue[2] : null;
@@ -8,6 +9,11 @@ function loginCheck() {
             `<button type="button" class="btn btn-light" id="login" onclick="toPath('/login')">로그인</button>
             <button type="button" class="btn btn-light" id="signup" onclick="toPath('/signup')">회원가입</button>`
         $('.header').append(needLogin)
+
+        const needLoginPopup =
+            `<button type="button" class="btn btn-light"><i class="fas fa-caret-down"></i></button>
+            <button type="button" class="btn btn-light"><i class="fas fa-caret-down"></i></button>`
+        $('#dropdown-content').append(needLoginPopup)
     }
     // 로그인된 경우
     else {
@@ -17,7 +23,18 @@ function loginCheck() {
                 <i class="fas fa-camera-retro"></i>
             </button>`
         $('.header').append(needLogout)
+
+        const needLogoutPopup =
+            `<button type="button" class="btn btn-light"><i class="fas fa-caret-down"></i></button>
+            <button type="button" class="btn btn-light"><i class="fas fa-caret-down"></i></button>`
+        $('#dropdown-content').append(needLogoutPopup)
     }
 }
 
-loginCheck()
+if (document.readyState === 'complete') {
+    loginCheck()
+}
+
+$(document).ready(function () {
+    loginCheck()
+});

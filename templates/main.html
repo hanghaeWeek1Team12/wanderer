@@ -33,7 +33,7 @@
     <!-- css -->
     <link rel="stylesheet" href="../static/styles/main.css">
 
-    <!-- modal -->
+    <!-- main modal -->
     <link rel="stylesheet" href="../static/styles/mainModal.css">
 
     <!-- cookie.js -->
@@ -46,7 +46,7 @@
 
     <!-- modal.js -->
     <script type=text/javascript src="{{
-                url_for('static', filename='js/modal.js') }}"></script>
+        url_for('static', filename='js/modal.js') }}"></script>
 
     <!-- likedList.js -->
     <script type=text/javascript src="{{
@@ -57,7 +57,11 @@
     <!-- 상단 로고 -->
     <div class="header">
         <p class="biglogo">W a n d e r e r</p>
-        <!-- appending from loginCheck.js -->
+        <!-- appending from loginCheck -->
+        <button type="button" class="btn btn-light" id="dropdown"><i class="fas fa-caret-down"></i></button>
+        <div id="dropdown-content">
+            <!-- appending from loginCheck -->
+        </div>
     </div>
 
     <!-- 카드 컬럼 -->
@@ -65,69 +69,70 @@
         {% for placelist in lists %}
         <div class="flex-grid-item">
             <div class="card">
-                <img class="card-image-top" src="{{ imageURL }}" onerror="this.src = '/static/img/img_not_found.PNG';"
-                    alt="imageURL">
+                <img class="card-image-top" src="{{ placelist['imageURL'] }}"
+                    onerror="this.src = '/static/img/img_not_found.PNG';" alt="imageURL">
                 <div class="card-top">
                     <div class="left">
                         <h6 class="card-subtitle text-muted">
                             <i class="fa fa-heart" aria-hidden="true">
                                 <span id="likeCount" style="margin-right: 15px"
-                                    onclick="likedList('{{placeName}}'); openModal();">
+                                    onclick="openModal(); likedList( `{{placelist['placeName']}}` );">
+                                    <!-- '좋아요' 수 출력하기 -->
                                     {{placelist['likedUser']|length}}
                                     명이 좋아합니다.
                                 </span>
                             </i>
                         </h6>
                         <h5 class="card-title1">
-                            {{ placeName }}
+                            {{ placelist['placeName'] }}
                         </h5>
-                        <h6 class="card-subtitle text-muted">
-                            <i class="fa fa-map-marker" aria-hidden="true"><span style="margin-left: 10px">{{ location
-                                    }}</span></i>
-                        </h6>
                     </div>
                     <div class="right">
                         {% if placelist['liked'] %}
                         <!-- 좋아요'누른 내역이 있을시 색깔있는 하트 출력-->
-                        <i onclick="toggle_like('{{ placeName }}','unlike')" class="fa fa-heart fa-lg"
+                        <i onclick="toggle_like(`{{ placelist['placeName'] }}`,'unlike')" class="fa fa-heart fa-lg"
                             aria-hidden="true"></i>
                         {% else %}
-                        <!-- 좋아요'누른 내역이 없을 시 빈 하트 출력-->
-                        <i onclick="toggle_like('{{ placeName }}','like')" class="fa fa-heart-o fa-lg"
+                        <!-- 좋아요'누른 내역이 있을시 색깔있는 하트 출력-->
+                        <i onclick="toggle_like(`{{ placelist['placeName'] }}`,'like')" class="fa fa-heart-o fa-lg"
                             aria-hidden="true"></i>
                         {% endif %}
-
                     </div>
                 </div>
+
+                <h6 class="card-subtitle text-muted">
+                    <i class="fa fa-map-marker" aria-hidden="true"><span style="margin-left: 10px">{{
+                            placelist['location']
+                            }}</span></i>
+                </h6>
             </div>
         </div>
         {% endfor %}
-        <!-- fake grid item -->
-    </div class="flex-grid-item">
-    </div class="flex-grid-item">
-    </div class="flex-grid-item">
-    </div class="flex-grid-item">
-    </div class="flex-grid-item">
-    </div class="flex-grid-item">
+        <!-- 더미 div -->
+        <div class="flex-grid-item"></div>
+        <div class="flex-grid-item"></div>
+        <div class="flex-grid-item"></div>
+        <div class="flex-grid-item"></div>
+        <div class="flex-grid-item"></div>
+        <div class="flex-grid-item"></div>
     </div>
 
-    <!-- 좋아요 한 닉네임 -->
-    <div id="modal" class="modal-overlay" onclick='closeModal()'>
+    <!-- 수임님 모달 위치 -->
+    <div id="modal" class="modal-overlay">
         <div class="modal-window">
             <div class="title">
                 좋아요
-                <div onclick='closeModal()' class="close-area"><i class="fas fa-times"></i></div>
+                <div onclick='closeModal()' class="close-area">X</div>
                 <hr>
             </div>
             <div class="content">
+                <!-- appending from likedList -->
             </div>
         </div>
     </div>
-
 </body>
 
 <!-- loginCheck.js -->
-<!-- 로드가 다 완료되고 나서 append 합니다. -->
 <script type=text/javascript src="{{
         url_for('static', filename='js/loginCheck.js') }}"></script>
 

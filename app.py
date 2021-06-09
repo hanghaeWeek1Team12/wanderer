@@ -215,8 +215,6 @@ def like_place():
     status = request.form['status']
 
     # 좋아요 취소 (pull을 이용하여 likedUser에서 해당 이메일 제거)
-    print(status)
-    print(email_receive)
     if status == 'unlike':
         db.place.update_one({"placeName": placeName_receive},
                             {'$pull': {
@@ -264,6 +262,10 @@ def upload():
     if (jwt == '' or jwt == None or email == '' or email == None):
         return {'res': False, 'msg': "다시 로그인해주세요."}
 
+    saved_place = db.place.find_one({'placeName': placeName}, {'_id': False})
+    if (saved_place != None):
+        return {'res': False, 'msg': "같은 장소가 이미 존재합니다."}
+
     # db 안에 입력합니다.
     db.place.insert_one({
         'placeName': placeName,
@@ -273,6 +275,23 @@ def upload():
         'createdUser': email
     })
     return {'res': True, 'msg': "업로드가 완료되었습니다."}
+
+
+@app.route("/deletePlace", methods=["POST"])
+@login_required
+def delete_place():
+    placeName = request.form["placeName"]
+    jwt = request.cookies.get("jwt")
+
+    saved_place = db.place.find_one({'placeName': placeName}, {'_id': False})
+
+    # 이메일이 일치하지 않는다면
+    if saved_place['createdUser'] != get_email_from_jwt(jwt):
+        return {'res': True, 'msg': "생성자가 아닙니다."}
+
+    # 이메일이 일치한다면
+    db.place.delete_one({'placeName': placeName})
+    return {'res': True, 'msg': "삭제가 완료되었습니다."}
 
 
 if __name__ == "__main__":
