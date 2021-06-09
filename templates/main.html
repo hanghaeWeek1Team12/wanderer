@@ -120,6 +120,24 @@
         </div>
         {% endfor %}
     </div>
+
+    <div id="modal" class="modal-overlay">
+        <div class="modal-window">
+            <div class="title">
+                Likes
+                <div onclick='closeModal()' class="close-area">X</div>
+                <hr>
+            </div>
+            <div class="content">
+                {# 모달내용창#}
+                {# {% for list in liked_lists %}#}
+                {# <p><i class="fa fa-heart" aria-hidden="true" style="margin-right: 10px"></i>ysong0504@gmail.com</p>#}
+                {# <p><i class="fa fa-heart" aria-hidden="true" style="margin-right: 10px"></i>{{
+                    list['likedUser'][0]['email'] }}</p>#}
+                {# {% endfor %}#}
+            </div>
+        </div>
+    </div>
 </body>
 
 </html>
