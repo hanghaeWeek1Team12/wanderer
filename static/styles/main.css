@@ -39,38 +39,43 @@
   	right: 120px;
 	top: 10px;
 }
-.header #dropdown{
+/* .header #dropdown{
 	display: none;
 	position: absolute;
   	right: 20px;
 	top: 5vw;
 	z-index: 1;
-}
+} */
 /* header mobile dropdown */
 .header #dropdown-content{
 	display: none;
 	flex-direction: column;
 	position: absolute;
   	right: 10px;
-	top: calc(5vw - 10px);
-	padding: 10px;
-	padding-top: 50px;
+	top: calc(5vw - 2px);
+	padding:2px 5px 2px 5px;
+	/* padding-top: 50px; */
 	background-color: rgb(255, 255, 255);
 	border-radius: 5px;
 }
+
 .header #dropdown-content button{
 	margin-top: 5px;
 }
 
-.header #dropdown:focus + #dropdown-content {
-	display: flex;
+.header #dropdown-content .hidden{
+	display: none;
+}
+
+.header #dropdown-content:hover button {
+	display: block;
 }
 
 @media screen and (max-width: 960px) {
 	.header #login { display: none; }
 	.header #signup { display: none; }
 	.header #upload { display: none; }
-	.header #dropdown { display: block; }
+	.header #dropdown-content { display: flex; }
 }
 /* cards */
 .card {
@@ -99,11 +104,10 @@
 	display: flex;
 	align-content: center;
 }
-.card-top .right .fa-heart-o{
+.card-top .right .fa-heart, .card-top .right .fa-heart-o, .card-top .right .fa-trash-alt{
 	margin: auto;
 }
 .card-top .right .fa-heart{
-	margin: auto;
 	color: salmon;
 }
 .card-title1{

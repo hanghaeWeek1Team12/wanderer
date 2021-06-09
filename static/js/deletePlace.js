@@ -1,5 +1,5 @@
-// 사진 삭제 기능
-function deleteImage(placeName) {
+// 장소 삭제 기능
+function deletePlace(placeName) {
     $.ajax({
         type: "POST",
         url: "/deletePlace",

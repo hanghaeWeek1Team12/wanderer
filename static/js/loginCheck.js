@@ -11,8 +11,8 @@ function loginCheck() {
         $('.header').append(needLogin)
 
         const needLoginPopup =
-            `<button type="button" class="btn btn-light"><i class="fas fa-caret-down"></i></button>
-            <button type="button" class="btn btn-light"><i class="fas fa-caret-down"></i></button>`
+            `<button type="button" class="btn btn-light hidden"><i class="fas fa-caret-down"></i></button>
+            <button type="button" class="btn btn-light hidden"><i class="fas fa-caret-down"></i></button>`
         $('#dropdown-content').append(needLoginPopup)
     }
     // 로그인된 경우
@@ -25,8 +25,8 @@ function loginCheck() {
         $('.header').append(needLogout)
 
         const needLogoutPopup =
-            `<button type="button" class="btn btn-light"><i class="fas fa-caret-down"></i></button>
-            <button type="button" class="btn btn-light"><i class="fas fa-caret-down"></i></button>`
+            `<button type="button" class="btn btn-light hidden" onclick="toPath('/upload')"><i class="fas fa-camera-retro fa-sm"></i></button>
+            <button type="button" class="btn btn-light hidden" onclick="deleteCookie('jwt'); toPath('/')"><i class="fas fa-door-open fa-sm"></i></button>`
         $('#dropdown-content').append(needLogoutPopup)
     }
 }

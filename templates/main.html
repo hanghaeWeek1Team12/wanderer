@@ -52,6 +52,10 @@
     <!-- likedList.js -->
     <script type=text/javascript src="{{
         url_for('static', filename='js/likedList.js') }}"></script>
+
+    <!-- deletePlace.js -->
+    <script type=text/javascript src="{{
+        url_for('static', filename='js/deletePlace.js') }}"></script>
 </head>
 
 <body>
@@ -59,8 +63,8 @@
     <div class="header">
         <p id="logo" class="biglogo">W a n d e r e r</p>
         <!-- appending from loginCheck -->
-        <button type="button" class="btn btn-light" id="dropdown"><i class="fas fa-caret-down"></i></button>
         <div id="dropdown-content">
+            <button type="button" class="btn btn-light dropdown-button"><i class="fas fa-caret-down fa-sm"></i></button>
             <!-- appending from loginCheck -->
         </div>
     </div>
@@ -89,9 +93,18 @@
                         <h5 class="card-title1">
                             {{ placelist['placeName'] }}
                         </h5>
+                        <h6 class="card-subtitle text-muted">
+                            <i class="fa fa-map-marker" aria-hidden="true"><span style="margin-left: 10px">{{
+                                    placelist['location']
+                                    }}</span></i>
+                        </h6>
                     </div>
                     <div class="right">
-                        {% if placelist['liked'] %}
+                        {% if placelist['created'] %}
+                        <!-- 본인이 만들었을 경우 삭제 버튼 출력 -->
+                        <i onclick="deletePlace(`{{ placelist['placeName'] }}`)" class="far fa-trash-alt fa-lg"
+                            aria-hidden="true"></i>
+                        {% elif placelist['liked'] %}
                         <!-- 좋아요'누른 내역이 있을시 색깔있는 하트 출력-->
                         <i id="like" onclick="toggle_like(`{{ placelist['placeName'] }}`,'unlike')" class="fa fa-heart fa-lg"
                             aria-hidden="true"></i>
@@ -103,12 +116,15 @@
                     </div>
 
                 </div>
+<<<<<<< HEAD
 
                 <h6 class="card-subtitle text-muted">
                     <i style="padding-left: 10px" class="fa fa-map-marker" aria-hidden="true"><span style="margin-left: 5px">{{
                             placelist['location']
                             }}</span></i>
                 </h6>
+=======
+>>>>>>> ec118519cd6c6b95fd44fd28f32df6adad1ec882
             </div>
         </div>
         {% endfor %}
