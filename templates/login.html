@@ -29,6 +29,9 @@
     <!-- css -->
     <link rel="stylesheet" href="../static/styles/login.css">
 
+    <!-- modal -->
+    <link rel="stylesheet" href="../static/styles/modal2.css">
+
     <!-- cookie.js -->
     <script type=text/javascript src="{{
             url_for('static', filename='js/cookie.js') }}"></script>
@@ -56,5 +59,26 @@
         <button type="button" onclick="login()" class="btn btn btn-primary">로그인</button>
         <button type="button" onclick="toPath('/signup')" class="btn btn btn-secondary signup">회원가입</button>
 </body>
+
+
+
+<!-- 수임님 모달 위치 -->
+<div id="modal" class="modal-overlay">
+    <div class="modal-window">
+        <div class="title">
+            좋아요
+            <div onclick='closeModal()' class="close-area">X</div>
+            <hr>
+        </div>
+        <div class="content">
+            {# 모달내용창#}
+            {# {% for email in email_list %}#}
+            {# <p><i class="fa fa-heart" aria-hidden="true" style="margin-right: 10px"></i>ysong0504@gmail.com</p>#}
+            {# <p><i class="fa fa-heart" aria-hidden="true" style="margin-right: 10px"></i>{{
+                list['likedUser'][0]['email'] }}</p>#}
+            {# {% endfor %}#}
+        </div>
+    </div>
+</div>
 
 </html>
