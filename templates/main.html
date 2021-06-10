@@ -33,9 +33,6 @@
     <!-- css -->
     <link rel="stylesheet" href="../static/styles/main.css">
 
-    <!-- main modal -->
-    <link rel="stylesheet" href="../static/styles/mainModal.css">
-
     <!-- cookie.js -->
     <script type=text/javascript src="{{
         url_for('static', filename='js/cookie.js') }}"></script>
@@ -43,6 +40,10 @@
     <!-- toggleLike.js -->
     <script type=text/javascript src="{{
             url_for('static', filename='js/toggleLike.js') }}"></script>
+
+    <!-- main.js -->
+    <script type=text/javascript src="{{
+        url_for('static', filename='js/main.js') }}"></script>
 
     <!-- modal.js -->
     <script type=text/javascript src="{{
@@ -60,7 +61,7 @@
 <body>
     <!-- 상단 로고 -->
     <div class="header">
-        <p class="biglogo">W a n d e r e r</p>
+        <p id="logo" class="biglogo">W a n d e r e r</p>
         <!-- appending from loginCheck -->
         <div id="dropdown-content">
             <button type="button" class="btn btn-light dropdown-button"><i class="fas fa-caret-down"></i></button>
@@ -68,10 +69,12 @@
         </div>
     </div>
 
+
     <!-- 카드 컬럼 -->
     <div class="flex-grid">
-        {% for placelist in lists %}
-        <div class="flex-grid-item">
+        {# jinja2를 이용하여 좋아요 기준 내림차순 출력#}
+        {% for placelist in lists | sort(attribute='liked_count', reverse = True) %}
+        <div class="flex-grid-item" id="card-item">
             <div class="card">
                 <img class="card-image-top" src="{{ placelist['imageURL'] }}"
                     onerror="this.src = '/static/img/img_not_found.PNG';" alt="imageURL">
@@ -79,7 +82,7 @@
                     <div class="left">
                         <h6 class="card-subtitle text-muted">
                             <i class="fa fa-heart" aria-hidden="true">
-                                <span id="likeCount" style="margin-right: 15px"
+                                <span id="likeCount" class="show-likes"
                                     onclick="openModal(); likedList( `{{placelist['placeName']}}` );">
                                     <!-- '좋아요' 수 출력하기 -->
                                     {{placelist['likedUser']|length}}
@@ -103,15 +106,25 @@
                             aria-hidden="true"></i>
                         {% elif placelist['liked'] %}
                         <!-- 좋아요'누른 내역이 있을시 색깔있는 하트 출력-->
-                        <i onclick="toggle_like(`{{ placelist['placeName'] }}`,'unlike')" class="fa fa-heart fa-lg"
+                        <i id="like" onclick="toggle_like(`{{ placelist['placeName'] }}`,'unlike')" class="fa fa-heart fa-lg"
                             aria-hidden="true"></i>
                         {% else %}
-                        <!-- 좋아요'누른 내역이 있을시 색깔있는 하트 출력-->
-                        <i onclick="toggle_like(`{{ placelist['placeName'] }}`,'like')" class="fa fa-heart-o fa-lg"
+                        <!-- 좋아요'누른 내역이 없을 시 색깔없는 하트 출력-->
+                        <i id="unlike" onclick="toggle_like(`{{ placelist['placeName'] }}`,'like')" class="fa fa-heart-o fa-lg"
                             aria-hidden="true"></i>
                         {% endif %}
                     </div>
+
                 </div>
+<<<<<<< HEAD
+
+                <h6 class="card-subtitle text-muted">
+                    <i style="padding-left: 10px" class="fa fa-map-marker" aria-hidden="true"><span style="margin-left: 5px">{{
+                            placelist['location']
+                            }}</span></i>
+                </h6>
+=======
+>>>>>>> ec118519cd6c6b95fd44fd28f32df6adad1ec882
             </div>
         </div>
         {% endfor %}

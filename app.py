@@ -11,6 +11,7 @@ client = MongoClient('localhost', 27017)
 db = client.wanderer
 
 app = Flask(__name__)
+app.jinja_env.add_extension('jinja2.ext.loopcontrols')
 app.config['SECRET_KEY'] = '452325d3c00449738b52eab18c63edf7'
 app.config['ALGORITHM'] = 'HS256'
 
@@ -82,13 +83,20 @@ def static_home():
     tour_lists = list(db.place.find({}, {'_id': False}))
 
     for liked_place in tour_lists:
+        # 좋아요 상태 확인
         liked_place['liked'] = False
+<<<<<<< HEAD
+        # 좋아요 개수 확인
+        liked_place['liked_count'] = 0
+=======
         if (liked_place['createdUser'] == email_receive):
             liked_place['created'] = True
         else:
             liked_place['created'] = False
 
+>>>>>>> ec118519cd6c6b95fd44fd28f32df6adad1ec882
         for liked_user in liked_place['likedUser']:
+            liked_place['liked_count'] += 1
             if (email_receive == liked_user['email']):
                 liked_place['liked'] = True
                 break
@@ -232,8 +240,8 @@ def like_place():
                             {'$pull': {
                                 "likedUser": {"email": email_receive}
                             }
-        }
-        )
+                            }
+                            )
         return {'res': True, 'msg': "좋아요를 취소하셨습니다."}
     # 좋아요 추가 (push로 likedUser에서 해당 이메일 추가)
     else:
@@ -241,23 +249,23 @@ def like_place():
                             {'$push': {
                                 "likedUser": {"email": email_receive}
                             }
-        }
-        )
+                            }
+                            )
         return {'res': True, 'msg': "좋아요가 완료되었습니다."}
 
 
 # '좋아요'누른 유저리스트 출력
-@ app.route("/likedList", methods=['POST'])
+@app.route("/likedList", methods=['POST'])
 def liked_list():
     placeName = request.form['placeName']
 
     likedUser = db.place.find_one({"placeName": placeName}, {
-                                  '_id': 0, 'likedUser': 1})
+        '_id': 0, 'likedUser': 1})
     return {'res': True, 'msg': "해당 장소를 좋아요 한사람들이 출력됩니다.", 'val': likedUser['likedUser']}
 
 
-@ app.route("/upload", methods=["POST"])
-@ login_required
+@app.route("/upload", methods=["POST"])
+@login_required
 def upload():
     imgsrc = request.form["imgsrc"]
     placeName = request.form["placeName"]
@@ -312,7 +320,6 @@ def delete_place():
     # 이메일이 일치한다면
     db.place.delete_one({'placeName': placeName})
     return {'res': True, 'msg': "삭제가 완료되었습니다."}
-
 
 if __name__ == "__main__":
     app.run('0.0.0.0', port=5000, debug=True)
