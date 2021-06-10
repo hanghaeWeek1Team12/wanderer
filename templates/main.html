@@ -82,11 +82,6 @@
     <div class="flex-grid">
         {# jinja2를 이용하여 좋아요 기준 내림차순 출력#}
         {% for placelist in lists | sort(attribute='liked_count', reverse = True) %}
-        {# {% for placelist in lists %}#}
-        {# 개인페이지 접속 시 조건에 맞는 게시물만 출력 #}
-        {% if mypage == True and placelist['liked'] == False %}
-        {% continue %}
-        {% endif %}
         <div class="flex-grid-item" id="card-item">
             <div class="card">
                 <img class="card-image-top" src="{{ placelist['imageURL'] }}"

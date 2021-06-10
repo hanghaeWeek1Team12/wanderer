@@ -14,7 +14,6 @@ client = MongoClient('localhost', 27017)
 db = client.wanderer
 
 app = Flask(__name__)
-app.jinja_env.add_extension('jinja2.ext.loopcontrols')
 app.config['SECRET_KEY'] = '452325d3c00449738b52eab18c63edf7'
 app.config['ALGORITHM'] = 'HS256'
 
@@ -109,60 +108,68 @@ def static_home():
 def mypage():
     # url를 통해서 개인페이지를 보고싶은 계정을 받아온다.
     email_receive = request.args.get('email_give')
+    print(email_receive)
+    jwt = request.cookies.get('jwt')
+    jwt_email = get_email_from_jwt(jwt)
 
     # 만약 현재 유저의 개인페이지를 출력하고싶다면 jwt를 이용하여 계정을 받아온다.
     if email_receive == 'mine':
-        jwt = request.cookies.get('jwt')
-        email_receive = get_email_from_jwt(jwt)
+        email_receive = jwt_email
 
     # 닉네임 확인
     nickname = db.user.find_one({'email': email_receive}, {
                                 '_id': 0, 'nickname': 1})
     name = nickname['nickname']
 
-    # 해당 계정이 '좋아요'한 여행지 확인
     tour_lists = list(db.place.find({}, {'_id': False}))
+    give_lists = []
 
-    for i, liked_place in enumerate(tour_lists):
+    for liked_place in tour_lists:
         # 좋아요 상태 확인
         liked_place['liked'] = False
+        # 해당 계정이 '좋아요'한 여행지 확인
+        mypage_liked = False
         # 좋아요 개수 확인
         liked_place['liked_count'] = 0
+
         for liked_user in liked_place['likedUser']:
             liked_place['liked_count'] += 1
-            if (email_receive == liked_user['email']):
+            if (liked_user['email'] == jwt_email):
                 liked_place['liked'] = True
-                break
-        # if not liked_place['liked']:
-        #     print(tour_lists[i])
-        #     del tour_lists[i]
+            if (liked_user['email'] == email_receive):
+                mypage_liked = True
 
-    return render_template("main.html", lists=tour_lists, mypage=True, nickname=name)
+        if mypage_liked == True:
+            give_lists.append(liked_place)
+
+    print(give_lists)
+
+    return render_template("main.html", lists=give_lists, mypage=True, nickname=name)
 
 
-@app.route('/signup', methods=["GET"])
+@ app.route('/signup', methods=["GET"])
 def static_signup():
     return render_template('signup.html')
 
 
-@app.route('/main', methods=["GET"])
+@ app.route('/main', methods=["GET"])
 def static_main():
     return render_template('main.html')
 
 
-@app.route('/login', methods=["GET"])
+@ app.route('/login', methods=["GET"])
 def static_login():
     return render_template('login.html')
 
 
-@app.route('/upload', methods=["GET"])
-@login_required
+@ app.route('/upload', methods=["GET"])
+@ login_required
 def static_upload():
     return render_template('upload.html')
 
 
 # api url
-@app.route("/login", methods=["POST"])
+@ app.route("/login", methods=["POST"])
 def login():
     email = request.form["email"]
     password = request.form["password"]
@@ -374,7 +381,7 @@ def delete_place():
 
 
 if __name__ == "__main__":
-    app.run('localhost', port=5000, debug=True)
+    app.run('0.0.0.0', port=5000, debug=True)
 
 # 연습장
 # 임의의 패스워드?

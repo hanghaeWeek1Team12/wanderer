@@ -13,10 +13,8 @@ function toggle_like(placeName, status) {
                 modalAlert(response['msg']);
             }
             if (response['res']) {
-                modalAlert(response['msg']);
                 window.location.reload();
             }
-
         }
     })
 }
