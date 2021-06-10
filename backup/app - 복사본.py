@@ -5,13 +5,9 @@ import bcrypt
 from datetime import timedelta, datetime
 import json
 from functools import wraps
-import re
 
 # mongoDB에서 db로 객체를 받아옵니다.
 client = MongoClient('localhost', 27017)
-
-# 서버용
-# client = MongoClient('mongodb://test:test@localhost', 27017)
 db = client.wanderer
 
 app = Flask(__name__)
@@ -77,7 +73,7 @@ def get_email_from_jwt(jwt_token):
 
 
 # static url
-@app.route('/')
+@app.route('/', methods=["GET"])
 def static_home():
     # 현재 로그인계정 가져오기
     jwt = request.cookies.get('jwt')
@@ -89,14 +85,16 @@ def static_home():
     for liked_place in tour_lists:
         # 좋아요 상태 확인
         liked_place['liked'] = False
+<<<<<<< HEAD
         # 좋아요 개수 확인
         liked_place['liked_count'] = 0
-        # 로그인 계정 확인
+=======
         if (liked_place['createdUser'] == email_receive):
             liked_place['created'] = True
         else:
             liked_place['created'] = False
 
+>>>>>>> ec118519cd6c6b95fd44fd28f32df6adad1ec882
         for liked_user in liked_place['likedUser']:
             liked_place['liked_count'] += 1
             if (email_receive == liked_user['email']):
@@ -104,41 +102,6 @@ def static_home():
                 break
 
     return render_template("main.html", lists=tour_lists)
-
-
-@app.route('/mypage')
-def mypage():
-    # url를 통해서 개인페이지를 보고싶은 계정을 받아온다.
-    email_receive = request.args.get('email_give')
-
-    # 만약 현재 유저의 개인페이지를 출력하고싶다면 jwt를 이용하여 계정을 받아온다.
-    if email_receive == 'mine':
-        jwt = request.cookies.get('jwt')
-        email_receive = get_email_from_jwt(jwt)
-
-    # 닉네임 확인
-    nickname = db.user.find_one({'email': email_receive}, {
-                                '_id': 0, 'nickname': 1})
-    name = nickname['nickname']
-
-    # 해당 계정이 '좋아요'한 여행지 확인
-    tour_lists = list(db.place.find({}, {'_id': False}))
-
-    for i, liked_place in enumerate(tour_lists):
-        # 좋아요 상태 확인
-        liked_place['liked'] = False
-        # 좋아요 개수 확인
-        liked_place['liked_count'] = 0
-        for liked_user in liked_place['likedUser']:
-            liked_place['liked_count'] += 1
-            if (email_receive == liked_user['email']):
-                liked_place['liked'] = True
-                break
-        # if not liked_place['liked']:
-        #     print(tour_lists[i])
-        #     del tour_lists[i]
-
-    return render_template("main.html", lists=tour_lists, mypage=True, nickname=name)
 
 
 @app.route('/signup', methods=["GET"])
@@ -219,16 +182,6 @@ def sign_up():
     nickname = request.form["nickname"]
     password = request.form["password"]
 
-    if email == '':
-        return {'res': False, 'msg': "이메일을 입력해주세요"}
-    valid_email = re.search("^[^\s@]+@[^\s@]+$", email)
-    if valid_email == None:
-        return {'res': False, 'msg': "이메일이 유효하지 않습니다"}
-    if nickname == '':
-        return {'res': False, 'msg': "닉네임을 입력해주세요"}
-    if password == '':
-        return {'res': False, 'msg': "비밀번호를 입력해주세요"}
-
     # db 안에 같은 이메일이 존재하는지 확인
     db_email_match = db.user.find_one({'email': email}, {'_id': False})
     if db_email_match is not None:
@@ -280,8 +233,8 @@ def like_place():
                             {'$pull': {
                                 "likedUser": {"email": email_receive}
                             }
-        }
-        )
+                            }
+                            )
         return {'res': True, 'msg': "좋아요를 취소하셨습니다."}
     # 좋아요 추가 (push로 likedUser에서 해당 이메일 추가)
     else:
@@ -289,8 +242,8 @@ def like_place():
                             {'$push': {
                                 "likedUser": {"email": email_receive}
                             }
-        }
-        )
+                            }
+                            )
         return {'res': True, 'msg': "좋아요가 완료되었습니다."}
 
 
@@ -361,9 +314,8 @@ def delete_place():
     db.place.delete_one({'placeName': placeName})
     return {'res': True, 'msg': "삭제가 완료되었습니다."}
 
-
 if __name__ == "__main__":
-    app.run('localhost', port=5000, debug=True)
+    app.run('0.0.0.0', port=5000, debug=True)
 
 # 연습장
 # 임의의 패스워드?
@@ -377,9 +329,3 @@ if bcrypt.checkpw(password, hashed):
     print("match")
 else:
     print("does not match")
-
-
-# project wanderer pip installer
-# pip install pymongo
-# pip install flask
-# pip install bcrypt

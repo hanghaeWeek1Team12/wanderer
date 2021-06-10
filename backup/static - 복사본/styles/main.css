@@ -39,21 +39,22 @@
   	right: 120px;
 	top: 10px;
 }
-.header #mypage{
+/* .header #dropdown{
+	display: none;
 	position: absolute;
-  	right: 175px;
-	top: 10px;
-}
-.header .dropdown-button{
-	width: 43px;
-}
+  	right: 20px;
+	top: 5vw;
+	z-index: 1;
+} */
+/* header mobile dropdown */
 .header #dropdown-content{
 	display: none;
 	flex-direction: column;
 	position: absolute;
   	right: 10px;
 	top: calc(5vw - 2px);
-	padding:2px;
+	padding:2px 5px 2px 5px;
+	/* padding-top: 50px; */
 	background-color: rgb(255, 255, 255);
 	border-radius: 5px;
 }
@@ -74,7 +75,6 @@
 	.header #login { display: none; }
 	.header #signup { display: none; }
 	.header #upload { display: none; }
-	.header #mypage { display: none; }
 	.header #dropdown-content { display: flex; }
 }
 /* cards */
@@ -147,13 +147,4 @@
 }
 .blank {
 	height: 0;
-}
-
-.show-likes:hover {
-	text-shadow: darkgray 1px 1px 1px;
-	cursor: pointer;
-}
-
-.cursor-event:hover {
-	cursor: pointer;
 }

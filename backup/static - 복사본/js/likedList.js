@@ -9,21 +9,17 @@ function likedList(placeName) {
         },
         success: function (response) {
             if (!response['res']) {
-                modalAlert(response['msg']);
+                alert(response['msg']);
             }
             if (response['res']) {
                 // 모달 창을 비웁니다.
                 $('.modal-window .content').empty()
                 // 모달 창을 채웁니다.
                 for (let res of response['val']) {
-                    let line = `
-                    <p id = "email-line" onclick=toPath('/mypage?email_give=` + res['email'] + `')>
-                    <i class="fa fa-heart heart" aria-hidden="true" style="margin-right: 10px"></i>`
-                        + res['email'] + `</p>`
+                    let line = '<p id = "email-line"><i class="fa fa-heart heart" aria-hidden="true" style="margin-right: 10px"></i>'
+                        + res['email'] + '</p>'
                     $('.modal-window .content').append(line)
                 }
-                // 모달 창을 뛰웁니다.
-                $('#modal')[0].style.display = 'flex'
             }
         }
     })

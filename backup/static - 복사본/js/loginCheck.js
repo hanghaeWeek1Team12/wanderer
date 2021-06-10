@@ -1,5 +1,3 @@
-// 일단 mypage로 통일?
-
 // 로그인 확인하기
 // .header #dropdown-content
 function loginCheck() {
@@ -13,8 +11,8 @@ function loginCheck() {
         $('.header').append(needLogin)
 
         const needLoginPopup =
-            `<button type="button" class="btn btn-light hidden" onclick="toPath('/login')"><i class="fas fa-sign-in-alt fa-sm"></i></button>
-            <button type="button" class="btn btn-light hidden" onclick="toPath('/signup')"><i class="fas fa-user-plus fa-sm"></i></button>`
+            `<button type="button" class="btn btn-light hidden"><i class="fas fa-caret-down"></i></button>
+            <button type="button" class="btn btn-light hidden"><i class="fas fa-caret-down"></i></button>`
         $('#dropdown-content').append(needLoginPopup)
     }
     // 로그인된 경우
@@ -23,18 +21,12 @@ function loginCheck() {
             `<button type="button" class="btn btn-light" id="login" onclick="deleteCookie('jwt'); toPath('/')">로그아웃</button>
             <button type="button" class="btn btn-light" id="upload" onclick="toPath('/upload')">
                 <i class="fas fa-camera-retro"></i>
-            </button>
-            <button type="button" class="btn btn-light" id="mypage" onclick="toPath('/mypage?email_give=mine')">
-                <i class="fas fa-user"></i>
-            </button>
-            `
+            </button>`
         $('.header').append(needLogout)
 
         const needLogoutPopup =
-            `            <button type="button" class="btn btn-light hidden" onclick="toPath('/mypage?email_give=mine')"><i class="fas fa-user"></i></button>
-            <button type="button" class="btn btn-light hidden" onclick="toPath('/upload')"><i class="fas fa-camera-retro fa-sm"></i></button>
-            <button type="button" class="btn btn-light hidden" onclick="deleteCookie('jwt'); toPath('/')"><i class="fas fa-door-open fa-sm"></i></button>
-            `
+            `<button type="button" class="btn btn-light hidden" onclick="toPath('/upload')"><i class="fas fa-camera-retro fa-sm"></i></button>
+            <button type="button" class="btn btn-light hidden" onclick="deleteCookie('jwt'); toPath('/')"><i class="fas fa-door-open fa-sm"></i></button>`
         $('#dropdown-content').append(needLogoutPopup)
     }
 }

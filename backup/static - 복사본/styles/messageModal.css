@@ -1,0 +1,71 @@
+#modal.modal-overlay {
+	display: none; /* none -> flex */
+
+	z-index: 3;
+	width: 100%;
+	height: 100%;
+	
+	position: fixed;
+	left: 0;
+	top: 0;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	background: rgba(255, 255, 255, 0.25);
+	box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+	backdrop-filter: blur(1.5px);
+	-webkit-backdrop-filter: blur(1.5px);
+	border-radius: 10px;
+	border: 1px solid rgba(255, 255, 255, 0.18);
+}
+#modal .modal-window {
+	z-index: 4;
+	/*background: rgba( 69, 139, 197, 0.70 );*/
+	background: whitesmoke;
+	opacity: 0.99;
+	box-shadow: 0 8px 32px 0 rgba( 31, 38, 135, 0.37 );
+	backdrop-filter: blur( 13.5px );
+	-webkit-backdrop-filter: blur( 13.5px );
+	border-radius: 10px;
+	border: 1px solid rgba( 255, 255, 255, 0.18 );
+	/*모달창 크기 조절 가능*/
+	width: 250px;
+	height: 400px;
+	position: relative;
+	top: -100px;
+	padding: 10px;
+}
+#modal .title {
+	/*padding-left: 10px;*/
+	/*display: block;*/
+	font-size: 14px;
+	text-align: center;
+	/*width: 250px;*/
+	/*margin : auto;*/
+	/*position: relative;*/
+	/*text-shadow: 1px 1px 2px gray;*/
+	color: black;
+
+}
+#modal .title h2 {
+	display: inline;
+}
+#modal .close-area {
+	display: inline;
+	float: right;
+	cursor: pointer;
+	text-shadow: 1px 1px 2px gray;
+	color: black;
+}
+
+#modal .content {
+	margin-top: 20px;
+	padding: 0px 10px;
+	font-size: 15px;
+	/*text-shadow: 1px 1px 2px gray;*/
+	color: black;
+}
+
+#modal .modal-window .content #email-line .heart{
+	color: salmon;
+}
