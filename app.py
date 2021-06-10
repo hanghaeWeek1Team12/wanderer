@@ -5,9 +5,13 @@ import bcrypt
 from datetime import timedelta, datetime
 import json
 from functools import wraps
+import re
 
 # mongoDB에서 db로 객체를 받아옵니다.
 client = MongoClient('localhost', 27017)
+
+# 서버용
+# client = MongoClient('mongodb://test:test@localhost', 27017)
 db = client.wanderer
 
 app = Flask(__name__)
@@ -85,16 +89,13 @@ def static_home():
     for liked_place in tour_lists:
         # 좋아요 상태 확인
         liked_place['liked'] = False
-<<<<<<< HEAD
         # 좋아요 개수 확인
         liked_place['liked_count'] = 0
-=======
         if (liked_place['createdUser'] == email_receive):
             liked_place['created'] = True
         else:
             liked_place['created'] = False
 
->>>>>>> ec118519cd6c6b95fd44fd28f32df6adad1ec882
         for liked_user in liked_place['likedUser']:
             liked_place['liked_count'] += 1
             if (email_receive == liked_user['email']):
@@ -184,6 +185,9 @@ def sign_up():
 
     if email == '':
         return {'res': False, 'msg': "이메일을 입력해주세요"}
+    valid_email = re.search("^[^\s@]+@[^\s@]+$", email)
+    if valid_email == None:
+        return {'res': False, 'msg': "이메일이 유효하지 않습니다"}
     if nickname == '':
         return {'res': False, 'msg': "닉네임을 입력해주세요"}
     if password == '':
@@ -240,8 +244,8 @@ def like_place():
                             {'$pull': {
                                 "likedUser": {"email": email_receive}
                             }
-                            }
-                            )
+        }
+        )
         return {'res': True, 'msg': "좋아요를 취소하셨습니다."}
     # 좋아요 추가 (push로 likedUser에서 해당 이메일 추가)
     else:
@@ -249,8 +253,8 @@ def like_place():
                             {'$push': {
                                 "likedUser": {"email": email_receive}
                             }
-                            }
-                            )
+        }
+        )
         return {'res': True, 'msg': "좋아요가 완료되었습니다."}
 
 
@@ -321,8 +325,9 @@ def delete_place():
     db.place.delete_one({'placeName': placeName})
     return {'res': True, 'msg': "삭제가 완료되었습니다."}
 
+
 if __name__ == "__main__":
-    app.run('0.0.0.0', port=5000, debug=True)
+    app.run('localhost', port=5000, debug=True)
 
 # 연습장
 # 임의의 패스워드?
@@ -336,3 +341,9 @@ if bcrypt.checkpw(password, hashed):
     print("match")
 else:
     print("does not match")
+
+
+# project wanderer pip installer
+# pip install pymongo
+# pip install flask
+# pip install bcrypt

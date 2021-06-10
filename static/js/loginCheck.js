@@ -1,3 +1,5 @@
+// 일단 mypage로 통일?
+
 // 로그인 확인하기
 // .header #dropdown-content
 function loginCheck() {
@@ -21,12 +23,18 @@ function loginCheck() {
             `<button type="button" class="btn btn-light" id="login" onclick="deleteCookie('jwt'); toPath('/')">로그아웃</button>
             <button type="button" class="btn btn-light" id="upload" onclick="toPath('/upload')">
                 <i class="fas fa-camera-retro"></i>
-            </button>`
+            </button>
+            <button type="button" class="btn btn-light" id="mypage" onclick="toPath('/mypage')">
+                <i class="fas fa-user"></i>
+            </button>
+            `
         $('.header').append(needLogout)
 
         const needLogoutPopup =
-            `<button type="button" class="btn btn-light hidden" onclick="toPath('/upload')"><i class="fas fa-camera-retro fa-sm"></i></button>
-            <button type="button" class="btn btn-light hidden" onclick="deleteCookie('jwt'); toPath('/')"><i class="fas fa-door-open fa-sm"></i></button>`
+            `            <button type="button" class="btn btn-light hidden" onclick="toPath('/mypage')"><i class="fas fa-user"></i></button>
+            <button type="button" class="btn btn-light hidden" onclick="toPath('/upload')"><i class="fas fa-camera-retro fa-sm"></i></button>
+            <button type="button" class="btn btn-light hidden" onclick="deleteCookie('jwt'); toPath('/')"><i class="fas fa-door-open fa-sm"></i></button>
+            `
         $('#dropdown-content').append(needLogoutPopup)
     }
 }

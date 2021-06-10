@@ -9,10 +9,10 @@ function deletePlace(placeName) {
         success: function (response) {
 
             if (!response['res']) {
-                alert(response['msg']);
+                modalAlert(response['msg']);
             }
             if (response['res']) {
-                alert(response['msg']);
+                modalAlert(response['msg']);
                 window.location.reload();
             }
         }

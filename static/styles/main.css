@@ -39,6 +39,11 @@
   	right: 120px;
 	top: 10px;
 }
+.header #mypage{
+	position: absolute;
+  	right: 175px;
+	top: 10px;
+}
 .header .dropdown-button{
 	width: 43px;
 }
@@ -69,6 +74,7 @@
 	.header #login { display: none; }
 	.header #signup { display: none; }
 	.header #upload { display: none; }
+	.header #mypage { display: none; }
 	.header #dropdown-content { display: flex; }
 }
 /* cards */

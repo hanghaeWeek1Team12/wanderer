@@ -26,28 +26,30 @@
         crossorigin="anonymous"></script>
     <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
 
+    <!-- css -->
+    <link rel="stylesheet" href="../static/styles/main.css">
+
+    <!-- mainModal.css -->
+    <link rel="stylesheet" href="../static/styles/mainModal.css">
+
+    <!-- messageModal.css -->
+    <link rel="stylesheet" href="../static/styles/messageModal.css">
+
     <!-- toPath.js -->
     <script type=text/javascript src="{{
             url_for('static', filename='js/toPath.js') }}"></script>
-
-    <!-- css -->
-    <link rel="stylesheet" href="../static/styles/main.css">
 
     <!-- cookie.js -->
     <script type=text/javascript src="{{
         url_for('static', filename='js/cookie.js') }}"></script>
 
-    <!-- toggleLike.js -->
-    <script type=text/javascript src="{{
-            url_for('static', filename='js/toggleLike.js') }}"></script>
-
-    <!-- main.js -->
-    <script type=text/javascript src="{{
-        url_for('static', filename='js/main.js') }}"></script>
-
     <!-- modal.js -->
     <script type=text/javascript src="{{
         url_for('static', filename='js/modal.js') }}"></script>
+
+    <!-- toggleLike.js -->
+    <script type=text/javascript src="{{
+            url_for('static', filename='js/toggleLike.js') }}"></script>
 
     <!-- likedList.js -->
     <script type=text/javascript src="{{
@@ -83,7 +85,7 @@
                         <h6 class="card-subtitle text-muted">
                             <i class="fa fa-heart" aria-hidden="true">
                                 <span id="likeCount" class="show-likes"
-                                    onclick="openModal(); likedList( `{{placelist['placeName']}}` );">
+                                    onclick="likedList( `{{placelist['placeName']}}` );">
                                     <!-- '좋아요' 수 출력하기 -->
                                     {{placelist['likedUser']|length}}
                                     명이 좋아합니다.
@@ -106,25 +108,16 @@
                             aria-hidden="true"></i>
                         {% elif placelist['liked'] %}
                         <!-- 좋아요'누른 내역이 있을시 색깔있는 하트 출력-->
-                        <i id="like" onclick="toggle_like(`{{ placelist['placeName'] }}`,'unlike')" class="fa fa-heart fa-lg"
-                            aria-hidden="true"></i>
+                        <i id="like" onclick="toggle_like(`{{ placelist['placeName'] }}`,'unlike')"
+                            class="fa fa-heart fa-lg" aria-hidden="true"></i>
                         {% else %}
                         <!-- 좋아요'누른 내역이 없을 시 색깔없는 하트 출력-->
-                        <i id="unlike" onclick="toggle_like(`{{ placelist['placeName'] }}`,'like')" class="fa fa-heart-o fa-lg"
-                            aria-hidden="true"></i>
+                        <i id="unlike" onclick="toggle_like(`{{ placelist['placeName'] }}`,'like')"
+                            class="fa fa-heart-o fa-lg" aria-hidden="true"></i>
                         {% endif %}
                     </div>
 
                 </div>
-<<<<<<< HEAD
-
-                <h6 class="card-subtitle text-muted">
-                    <i style="padding-left: 10px" class="fa fa-map-marker" aria-hidden="true"><span style="margin-left: 5px">{{
-                            placelist['location']
-                            }}</span></i>
-                </h6>
-=======
->>>>>>> ec118519cd6c6b95fd44fd28f32df6adad1ec882
             </div>
         </div>
         {% endfor %}
@@ -148,7 +141,23 @@
                 <hr>
             </div>
             <div class="content">
-                <!-- appending from likedList -->
+                <!-- appending from likedList.js -->
+            </div>
+        </div>
+    </div>
+
+    <!-- 메시지 모달 위치 -->
+    <div id="msg-modal" class="modal-overlay">
+        <div class="modal-window">
+            <div class="title">
+                메시지
+                <div onclick='closeMsgModal()' class="close-area">
+                    <i class="fas fa-times"></i>
+                </div>
+                <hr>
+            </div>
+            <div class="content">
+                <!-- appending from modal.js -->
             </div>
         </div>
     </div>

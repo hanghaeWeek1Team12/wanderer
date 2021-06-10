@@ -26,12 +26,19 @@
         crossorigin="anonymous"></script>
     <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
 
+    <!-- css -->
+    <link rel="stylesheet" href="../static/styles/upload.css">
+
+    <!-- messageModal.css -->
+    <link rel="stylesheet" href="../static/styles/messageModal.css">
+
     <!-- toPath.js -->
     <script type=text/javascript src="{{
             url_for('static', filename='js/toPath.js') }}"></script>
 
-    <!-- css -->
-    <link rel="stylesheet" href="../static/styles/upload.css">
+    <!-- modal.js -->
+    <script type=text/javascript src="{{
+        url_for('static', filename='js/modal.js') }}"></script>
 
     <!-- cookie.js -->
     <script type=text/javascript src="{{
@@ -60,5 +67,22 @@
         </div>
         <button type="button" onclick="upload()" class="btn btn btn-primary">업로드</button>
 </body>
+
+
+<!-- 메시지 모달 위치 -->
+<div id="msg-modal" class="modal-overlay">
+    <div class="modal-window">
+        <div class="title">
+            메시지
+            <div onclick='closeMsgModal()' class="close-area">
+                <i class="fas fa-times"></i>
+            </div>
+            <hr>
+        </div>
+        <div class="content">
+            <!-- appending from modal.js -->
+        </div>
+    </div>
+</div>
 
 </html>

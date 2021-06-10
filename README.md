@@ -217,6 +217,29 @@
 
       </details>
 
+<br>
+
+* ## 설치
+    * <details>
+      <summary>AWS</summary>
+      <br>
+
+      리눅스 EC2를 구매하고 security group를 지정하세요!   
+      [스파르타 코딩클럽 웹종합 5-12 참고](https://online.spartacodingclub.kr/enrolleds/60801f9e63d7a131f468ee6b/edetails/60801f9e63d7a131f468eeb4)   
+
+      wanderer 파일을 zip 하기 이전에 app.py의 app을 서버용 객체로 지정해주세요!   
+      `client = MongoClient('mongodb://test:test@localhost', 27017)`   
+
+      wanderer의 zip 파일을 EC2에 넣어주세요!    
+
+      코드   
+      `sudo su`   
+      `chmod ugo+rwx installer.sh`   
+      `./installer.sh`   
+      `nohup python app.py &`    
+
+      pip 파일들 설치는 sh에 추가했습니다.   
+      </details>
 
 <br>
 <br>

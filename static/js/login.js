@@ -23,7 +23,7 @@ function login() {
                 }
                 // 로그인에 실패하면   
                 else {
-                    alert(response["msg"])
+                    modalAlert(response["msg"])
                 }
             }
     })

@@ -26,15 +26,19 @@
         crossorigin="anonymous"></script>
     <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
 
-    <!-- toPath.js -->
-    <script type=text/javascript src="{{
-        url_for('static', filename='js/toPath.js') }}"></script>
-
     <!-- css -->
     <link rel="stylesheet" href="../static/styles/login.css">
 
-    <!-- modal -->
+    <!-- modal css -->
     <link rel="stylesheet" href="../static/styles/messageModal.css">
+
+    <!-- toPath.js -->
+    <script type=text/javascript src="{{
+            url_for('static', filename='js/toPath.js') }}"></script>
+
+    <!-- modal.js -->
+    <script type=text/javascript src="{{
+            url_for('static', filename='js/modal.js') }}"></script>
 
     <!-- cookie.js -->
     <script type=text/javascript src="{{
@@ -43,11 +47,6 @@
     <!-- login.js -->
     <script type=text/javascript src="{{
         url_for('static', filename='js/login.js') }}"></script>
-
-    <!-- modal.js -->
-    <script type=text/javascript src="{{
-        url_for('static', filename='js/modal.js') }}"></script>
-
 </head>
 
 <body>
@@ -71,17 +70,17 @@
 
 
 <!-- 모달 위치 -->
-<div id="modal" class="modal-overlay">
+<div id="msg-modal" class="modal-overlay">
     <div class="modal-window">
         <div class="title">
-            좋아요
-            <div onclick='closeModal()' class="close-area">
+            메시지
+            <div onclick='closeMsgModal()' class="close-area">
                 <i class="fas fa-times"></i>
             </div>
             <hr>
         </div>
         <div class="content">
-            비밀번호를 확인해주세요.
+            <!-- 텍스트가 변경되는 곳 -->
         </div>
     </div>
 </div>

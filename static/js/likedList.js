@@ -9,7 +9,7 @@ function likedList(placeName) {
         },
         success: function (response) {
             if (!response['res']) {
-                alert(response['msg']);
+                modalAlert(response['msg']);
             }
             if (response['res']) {
                 // 모달 창을 비웁니다.
@@ -20,6 +20,8 @@ function likedList(placeName) {
                         + res['email'] + '</p>'
                     $('.modal-window .content').append(line)
                 }
+                // 모달 창을 뛰웁니다.
+                $('#modal')[0].style.display = 'flex'
             }
         }
     })

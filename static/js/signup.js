@@ -16,7 +16,7 @@ function signup() {
                 }
                 // 회원가입에 실패하면   
                 else {
-                    alert(response["msg"])
+                    modalAlert(response["msg"])
                 }
             }
     })
