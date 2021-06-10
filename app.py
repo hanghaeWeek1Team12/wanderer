@@ -1,9 +1,8 @@
 from pymongo import MongoClient
-from flask import Flask, request, jsonify, make_response, request, render_template, session, flash
+from flask import Flask, request, render_template
 import jwt
 import bcrypt
 from datetime import timedelta, datetime
-import json
 from functools import wraps
 import re
 
@@ -276,6 +275,17 @@ def like_place():
 
     # 좋아요 취소 (pull을 이용하여 likedUser에서 해당 이메일 제거)
     if status == 'unlike':
+        # 본인이 좋아했는지 확인
+        place = db.place.find_one(
+            {'placeName': placeName_receive}, {'_id': False, 'likedUser': True})
+        i_liked_this_place = False
+        for email in place['likedUser']:
+            if email['email'] == email_receive:
+                i_liked_this_place = True
+                break
+        if i_liked_this_place == False:
+            return {'res': False, 'msg': "좋아요한 사진이 아닙니다."}
+
         db.place.update_one({"placeName": placeName_receive},
                             {'$pull': {
                                 "likedUser": {"email": email_receive}
@@ -283,6 +293,7 @@ def like_place():
         }
         )
         return {'res': True, 'msg': "좋아요를 취소하셨습니다."}
+
     # 좋아요 추가 (push로 likedUser에서 해당 이메일 추가)
     else:
         db.place.update_one({"placeName": placeName_receive},
