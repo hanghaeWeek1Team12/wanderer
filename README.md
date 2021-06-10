@@ -74,6 +74,13 @@ http://www.wanderer99.com/
             * cookie = {'jwt' : JWT}
             * response = {res=True, msg="", val=[{imgsrc="url", likeCount=3, liked=True, placeName="한라산", location="서울시 영등포구 ..."},{...},{...}]}
             * 기능 = front에 모든 장소를 표기, array val로 받음
+   
+        * /mypage
+            * method = get
+            * request = {}
+            * cookie = {'jwt' : JWT}
+            * response = {res=True, msg="", val=[{imgsrc="url", likeCount=3, liked=True, placeName="한라산", location="서울시 영등포구 ..."},{...},{...}]}
+            * 기능 = front에서 특정 유저가 좋아요한 장소 표기
 
         * /upload
             * method = post
@@ -95,6 +102,13 @@ http://www.wanderer99.com/
             * cookie = {'jwt' : JWT}
             * response = {res=True, msg="좋아요가 완료되었습니다." val=""}
             * 기능 = 로그인된 아이디로 장소를 좋아요/좋아요 취소 한다.
+   
+        * /likedList
+            * method = post
+            * request = {placeName="한라산", status=True}
+            * cookie = {'jwt' : JWT}
+            * response = {res=True, msg="해당 장소를 좋아요 한사람들이 출력됩니다.", 'val': likedUser['likedUser']}
+            * 기능 = 특정 게시물의 '좋아요'를 누른 유저들의 리스트 출력
 
     </details>
 
