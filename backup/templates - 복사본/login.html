@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Wander</title>
+
+    <!-- logo font -->
+    <link href="https://fonts.googleapis.com/css2?family=Do+Hyeon&display=swap" rel="stylesheet">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"></script>
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+
+    <!-- toPath.js -->
+    <script type=text/javascript src="{{
+        url_for('static', filename='js/toPath.js') }}"></script>
+
+    <!-- css -->
+    <link rel="stylesheet" href="../static/styles/login.css">
+
+    <!-- modal -->
+    <link rel="stylesheet" href="../static/styles/messageModal.css">
+
+    <!-- cookie.js -->
+    <script type=text/javascript src="{{
+            url_for('static', filename='js/cookie.js') }}"></script>
+
+    <!-- login.js -->
+    <script type=text/javascript src="{{
+        url_for('static', filename='js/login.js') }}"></script>
+
+</head>
+
+<body>
+    <div class="header">
+        <p class="biglogo" onclick="toPath('/')">W a n d e r e r</p>
+    </div>
+    <div class="inner_box">
+        <div class="form-login">
+
+            <input type="email" class="form-control" id="email" placeholder="이메일">
+            <label for="email"></label>
+
+            <input type="password" class="form-control" id="password" placeholder="비밀번호">
+            <label for="password"></label>
+
+        </div>
+        <button type="button" onclick="login()" class="btn btn btn-primary">로그인</button>
+        <button type="button" onclick="toPath('/signup')" class="btn btn btn-secondary signup">회원가입</button>
+</body>
+
+
+
+<!-- 수임님 모달 위치 -->
+<div id="modal" class="modal-overlay">
+    <div class="modal-window">
+        <div class="title">
+            좋아요
+            <div onclick='closeModal()' class="close-area">X</div>
+            <hr>
+        </div>
+        <div class="content">
+            {# 모달내용창#}
+            {# {% for email in email_list %}#}
+            {# <p><i class="fa fa-heart" aria-hidden="true" style="margin-right: 10px"></i>ysong0504@gmail.com</p>#}
+            {# <p><i class="fa fa-heart" aria-hidden="true" style="margin-right: 10px"></i>{{
+                list['likedUser'][0]['email'] }}</p>#}
+            {# {% endfor %}#}
+        </div>
+    </div>
+</div>
+
+</html>

@@ -73,6 +73,7 @@ body{
     font-size: 15px;
 }
 
-.cursor-event:hover {
-	cursor: pointer;
+.signup{
+    margin-top: 20px;
 }
+

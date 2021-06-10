@@ -72,7 +72,3 @@ body{
     border-radius: 20px;
     font-size: 15px;
 }
-
-.cursor-event:hover {
-	cursor: pointer;
-}
