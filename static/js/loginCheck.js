@@ -11,8 +11,8 @@ function loginCheck() {
         $('.header').append(needLogin)
 
         const needLoginPopup =
-            `<button type="button" class="btn btn-light hidden"><i class="fas fa-caret-down"></i></button>
-            <button type="button" class="btn btn-light hidden"><i class="fas fa-caret-down"></i></button>`
+            `<button type="button" class="btn btn-light hidden" onclick="toPath('/login')"><i class="fas fa-sign-in-alt fa-sm"></i></button>
+            <button type="button" class="btn btn-light hidden" onclick="toPath('/signup')"><i class="fas fa-user-plus fa-sm"></i></button>`
         $('#dropdown-content').append(needLoginPopup)
     }
     // 로그인된 경우

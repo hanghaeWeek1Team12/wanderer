@@ -174,6 +174,13 @@ def sign_up():
     nickname = request.form["nickname"]
     password = request.form["password"]
 
+    if email == '':
+        return {'res': False, 'msg': "이메일을 입력해주세요"}
+    if nickname == '':
+        return {'res': False, 'msg': "닉네임을 입력해주세요"}
+    if password == '':
+        return {'res': False, 'msg': "비밀번호를 입력해주세요"}
+
     # db 안에 같은 이메일이 존재하는지 확인
     db_email_match = db.user.find_one({'email': email}, {'_id': False})
     if db_email_match is not None:

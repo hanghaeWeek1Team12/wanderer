@@ -10,7 +10,7 @@ function closeModal() {
 
 }
 
-// 작은 모달창
-function messageModal(msg) {
+// 모달창 뛰우기
+function modalAlert(msg) {
     $('#modal')[0].style.display = 'none'
 }
