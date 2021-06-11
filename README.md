@@ -61,7 +61,7 @@
           * *.css
       * templates   
         * *.html
-      * app.py
+      * app.py   
       * installer.sh  
       </details>
       <br>
@@ -148,6 +148,8 @@
             * cookie = {}
             * response = {res=True, msg="회원가입 되었습니다."}
             * 기능 = 이메일/닉네임 중복확인, 이메일 유효성 확인, 회원가입
+            * response = {res=True, msg="회원가입 되었습니다.", val=JWT}
+            * 기능 = 이메일/닉네임 중복확인, 회원가입
 
         * /upload
             * method = post
@@ -169,9 +171,9 @@
             * cookie = {'jwt' : JWT}
             * response = {res=True, msg="좋아요를 완료/취소되었습니다."}
             * 기능 = 로그인된 아이디로 장소를 좋아요/좋아요 취소 한다.
-    
     </details>
-
+    <br>
+    
     * <details>
       <summary>SSR 페이지 설계</summary>
         <br>
@@ -210,8 +212,15 @@
             * cookie = {}
             * responst = upload.html
             * 기능 = 업로드 페이지
-
+   
+        * /likedList
+            * method = post
+            * request = {placeName="한라산", status=True}
+            * cookie = {'jwt' : JWT}
+            * response = {res=True, msg="해당 장소를 좋아요 한사람들이 출력됩니다.", 'val': likedUser['likedUser']}
+            * 기능 = 특정 게시물의 '좋아요'를 누른 유저들의 리스트 출력
     </details>
+    <br>
 
     * <details>
       <summary>데이터베이스</summary>
@@ -228,8 +237,8 @@
             * location = str
             * likedUser = arr[email = str]
             * createdUser = str
-
     </details>
+    <br>
 
     * <details>
       <summary>기능적 요구</summary>
