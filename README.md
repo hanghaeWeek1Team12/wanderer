@@ -1,29 +1,79 @@
 # wanderer
 
+팀원 : 최수임, 윤송, 김도형   
+작업공간 : 게더타운
+
 테스트테스트   
 아무거나 또친다!! -수임-   
 또또 쳐본다! -수임2   
 신난다 신난다. -수임3-   
+첫 깃의 발자취는 삭제하지 않습니다 ㅋㅋ
 
-http://www.wanderer99.com/   
 
+* ## 결과
+    * [프로젝트 링크](http://www.wanderer99.com/)   
+    * [유튜브 링크](https://www.youtube.com/watch?v=3KDOiHmCx-g&t=43s)
 
 * ## Project
     * <details>
-      <summary>설명</summary>
+      <summary>아아디어</summary>
       <br>
 
       간단한 여행지 좋아요 사이트입니다.   
       정해진 여행지 목록에서 좋아요를 누르고   
       다른 사람들은 얼마나 좋아하는지 알아볼 수 있습니다.   
+      아이디어와 전체적인 기획을 짜는데 하루 정도의 시간이 주어졌습니다.      
+      식단 공유 플랫폼/취직 종합 플랫폼/여행지 플랫폼이 후보로 나왔었습니다.   
+      4일간의 프로젝트 기간, 아이디어의 난이도를 고려하며 의견을 종합하여   
+      결과적으로 여행지 공유 사이트를 구현하게 되었습니다.   
+      </details>
+      <br>
+
+    * <details>
+      <summary>기능</summary>
+      <br>
+
+      * 로그인/로그아웃(JWT)
+      * 회원가입
+      * 사진 url/장소 위치/장소명 저장
+      * 회원/타 회원 좋아요 페이지
+      * 좋아요 리스트
+      * 커스텀 alert 창
+      * 모바일 반응형 페이지   
+      * Server Side Rendering
+      
+      </details>
+      <br>
+        
+    * <details>
+      <summary>파일구조</summary>
+      <br>
+
+      단일한 static html을 사용하는 것은 복잡성과 읽는데 시간을 너무 많이   
+      소모되게 만듭니다. 더 좋고 깔끔한 구조를 위해 노력했습니다.   
+      ["프로그램을 읽고 쓰는 비율은 확실히 10 대 1을 넘는다."](https://www.goodreads.com/quotes/835238-indeed-the-ratio-of-time-spent-reading-versus-writing-is)
+      
+      * static
+        * img
+        * js
+          * *.js
+        * styles
+          * *.css
+      * templates   
+        * *.html
+      * app.py
+      * installer.sh  
       </details>
       <br>
 
 * ## Frontend
     * <details>
-      <summary>Wireframe</summary>
+      <summary>디자인</summary>
       <br>
-
+      
+      더 기능을 추가하거나 작성을 하며 디자인이 많이 바뀌었지만   
+      그럼에도 와이어프레임은 좋은 기준이 되었습니다.   
+      
       로그인 페이지   
 
       ![](img/login_template.png)
@@ -42,6 +92,37 @@ http://www.wanderer99.com/
       </details>
       <br>
     
+    * <details>
+      <summary>반응형</summary>
+      <br>
+
+      [responsive grid에 대한 연구](https://codepen.io/astrotim/pen/WQwqbW)   
+      [드랍다운에 대한 연구](https://www.w3schools.com/css/css_dropdowns.asp)
+      </details>
+      <br>
+        
+    * <details>
+      <summary>기능구현</summary>
+      <br>
+        
+      * SSR
+        * 항해99의 요구사항 중 Server Side Rendering이 있었습니다.   
+          Flask의 Jinja2를 사용하여 html이 미리 적용된 상태로 주어집니다.   
+          저희는 주로 main 페이지의 이미지를 정렬하고 나열하는데 사용하였습니다.   
+          ```
+          {# jinja2를 이용하여 좋아요 기준 내림차순 출력#}
+          {% for placelist in lists | sort(attribute='liked_count', reverse = True) %}
+          ...
+          ```
+          <br>
+          SSR은 클라이언트가 항상 평균적인 성능을 갖지 않습니다.   
+          스마트폰마다의 성능도 각기 다릅니다.   
+          그럼으로 클라이언트에서 일정한 속도가 나오지 않습니다.   
+          
+          서버 사이드 렌더링은 backend 측에서 request에서 받은 정보로    
+          완성된 html을 출력하기에 일정한 속도가 약속될 수 있습니다.
+      </details>
+      <br>
 
 
 * ## Backend
@@ -65,15 +146,8 @@ http://www.wanderer99.com/
             * method = post
             * request = {email="", password="", nickname=""}
             * cookie = {}
-            * response = {res=True, msg="회원가입 되었습니다.", val=JWT}
-            * 기능 = 이메일/닉네임 중복확인, 회원가입
-
-        * /
-            * method = get
-            * request = {}
-            * cookie = {'jwt' : JWT}
-            * response = {res=True, msg="", val=[{imgsrc="url", likeCount=3, liked=True, placeName="한라산", location="서울시 영등포구 ..."},{...},{...}]}
-            * 기능 = front에 모든 장소를 표기, array val로 받음
+            * response = {res=True, msg="회원가입 되었습니다."}
+            * 기능 = 이메일/닉네임 중복확인, 이메일 유효성 확인, 회원가입
 
         * /upload
             * method = post
@@ -93,8 +167,49 @@ http://www.wanderer99.com/
             * method = post
             * request = {placeName="한라산", status=True}
             * cookie = {'jwt' : JWT}
-            * response = {res=True, msg="좋아요가 완료되었습니다." val=""}
+            * response = {res=True, msg="좋아요를 완료/취소되었습니다."}
             * 기능 = 로그인된 아이디로 장소를 좋아요/좋아요 취소 한다.
+    
+    </details>
+
+    * <details>
+      <summary>SSR 페이지 설계</summary>
+        <br>
+
+        * /
+            * method = get
+            * request = {}  
+            * cookie = {'jwt' : JWT}
+            * responst = main.html
+            * 기능 = jwt가 있을 경우 사용자가 만들거나 좋아한 장소를 나타냅니다.
+              
+        * /mypage
+            * method = get
+            * request = {email_give=""}  
+            * cookie = {'jwt' : JWT}
+            * responst = main.html
+            * 기능 = 주어진 이메일의 회원이 좋아한 장소를 나타냅니다.
+
+        * /signup
+            * method = get
+            * request = {}  
+            * cookie = {}
+            * responst = signup.html
+            * 기능 = 회원가입 페이지
+        
+        * /login
+            * method = get
+            * request = {}  
+            * cookie = {}
+            * responst = login.html
+            * 기능 = 로그인 페이지
+        
+        * /upload
+            * method = get
+            * request = {}  
+            * cookie = {}
+            * responst = upload.html
+            * 기능 = 업로드 페이지
 
     </details>
 
@@ -106,7 +221,7 @@ http://www.wanderer99.com/
           * user
             * email = str
             * nickname = str
-            * password = str
+            * password = binary
           * place
             * placeName = str
             * imageURL = str
@@ -176,12 +291,7 @@ http://www.wanderer99.com/
         ```
         <br>
 
-
-
-      * [JWT에 대한 연구](https://www.youtube.com/watch?v=e-_tsR0hVLQ&t=130s)   
-
-      * [responsive grid에 대한 연구](https://codepen.io/astrotim/pen/WQwqbW)
-
+      * [JWT에 대한 연구](https://www.youtube.com/watch?v=e-_tsR0hVLQ&t=130s)
       </details>
       <br>
 

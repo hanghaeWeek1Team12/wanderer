@@ -7,10 +7,10 @@ from functools import wraps
 import re
 
 # mongoDB에서 db로 객체를 받아옵니다.
-client = MongoClient('localhost', 27017)
+# client = MongoClient('localhost', 27017)
 
 # 서버용
-# client = MongoClient('mongodb://test:test@localhost', 27017)
+client = MongoClient('mongodb://test:test@localhost', 27017)
 db = client.wanderer
 
 app = Flask(__name__)
