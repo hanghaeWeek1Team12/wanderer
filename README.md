@@ -13,6 +13,7 @@
 * ## 결과
     * [프로젝트 링크](http://www.wanderer99.com/)   
     * [유튜브 링크](https://www.youtube.com/watch?v=3KDOiHmCx-g&t=43s)
+      <br>
 
 * ## Project
     * <details>
@@ -102,7 +103,7 @@
       <br>
         
     * <details>
-      <summary>기능구현</summary>
+      <summary>Jinja2</summary>
       <br>
         
       * SSR
@@ -116,6 +117,56 @@
           ```
           <br>
           
+          파이선 서버에서 변수 보내주기 
+          
+          ```python
+          return render_template("index.html", var = giveVar)
+          ```
+          <br>
+
+          html 변수표시는 `{var}` 코드는 `{{code}}`로 한다.   
+          <br>
+
+          html if 문
+          ```html
+          {% if template_variable == "Hello" %}
+          <p>{{ template_variable }}, World!</p> 
+          {% endif %}
+          ```
+          <br>
+
+          html if, else if, else 문
+          ```html
+          {% if template_variable < 20 %}
+          <p>{{ template_variable }}은 20보다 작다.</p> 
+          {% elif template_variable > 20 %}
+          <p>{{ template_variable }}은 20보다 크다.</p> 
+          {% else %}
+          <p>{{ template_variable }}은 20이다.</p> 
+          {% endif %}
+          ```
+          <br>
+
+          html for 문
+          ```
+          {% for row in rows %}
+          {% set gu_name = row.MSRSTE_NM %}
+          {% set gu_mise = row.IDEX_MVL %}
+          <li>{{ gu_name }}: {{ gu_mise }}</li>
+          {% endfor %}
+          ```
+          <br>
+
+          dictionary for 문
+          ```
+          <ul>
+          {% for key, value in template_dict.items() %}
+          <li>{{ key }} : {{ value }}</li>
+          {% endfor%}
+          </ul>
+          ```
+          <br>
+
           클라이언트가 항상 평균적인 성능을 갖지 않습니다.    
           스마트폰마다의 성능도 각기 다릅니다.   
           그럼으로 클라이언트에서 일정한 속도가 나오지 않습니다.   
@@ -176,7 +227,7 @@
     <br>
     
     * <details>
-      <summary>SSR 페이지 설계</summary>
+      <summary>페이지 설계</summary>
         <br>
 
         * /
@@ -242,66 +293,106 @@
     <br>
 
     * <details>
-      <summary>기능적 요구</summary>
+      <summary>Bcrypt</summary>  
       <br>
 
-      * 여행지 데이터 직접 입력 or scraping   
+      ## Bcrypt
+      우선 bcrypt에 대하여 이해합시다.   
+      bcrypt은 단순한 암호화 모듈입니다.   
+      ```python
+      # 연습장
+      # 임의의 패스워드?
+      password = b"password"
+      # bcrypt에서 소금을 뿌려줍니다.
+      salt = bcrypt.gensalt()
+      # password 와 소금을 이용하여 hashed를 만듭니다.
+      hashed = bcrypt.hashpw(password, salt)
+      # 위에 만들어진 hashed가 일치하는지 확인합니다.
+      if bcrypt.checkpw(password, hashed):
+          print("match")
+      else:
+          print("does not match")
+      ```
+      위 코드에서   
+      `password`는 사용자의 암호   
 
-      * Jinja2에 대한 연구    
+      `salt`는 bcrypt에서 만들어주는 임의의 값입니다.   
+      코드가 실행 될 때마다 `bcrypt.gensalt()`가 불러지기에 항상 `salt` 값은 다릅니다.    
 
-        jinja2는 flask에서 html에 변수를 보내주어 사용할 수 있는 plugin입니다.   
-        <br>
+      `hashed`는 위의 `password`와 `salt`를 이용해서 암호화 된 값입니다.   
+      이 `hashed`값 또한 `salt`값이 변동적이기에 만들 때마다 다르게 나옵니다.    
 
-        파이선 서버에서 변수 보내주기 
-        ```python
-        return render_template("index.html", var = giveVar)
-        ```
-        <br>
+      `hashed` 값이 항상 다름에도 불구하고 `checkpw`를 사용하면 `hashed`가 `password`에서   
+      유래하였는지 확인이 가능하다.   
 
-        html 변수표시는 `{var}` 코드는 `{{code}}`로 한다.   
-        <br>
+      여기에서 중요한 점은 `유래`의 `일치`를 확인 가능하다는 점입니다.   
+      즉 `파생`되었는지만 확인이 가능하지 `hashed`를 통해 `password` 자체를    
+      알아내는 것은 불가하다는 점이 중요합니다.   
 
-        html if 문
-        ```html
-        {% if template_variable == "Hello" %}
-        <p>{{ template_variable }}, World!</p> 
-        {% endif %}
-        ```
-        <br>
+      그럼 `salt`도 없는데 도대체 어떻게 그걸 알아요?   
+      `salt`는 `hashed`의 값 내에 암호화되어 저장됩니다.(첫 20자 정도)    
+      bcrypt는 그래서 `hashed` 값 만으로 그 `파생` 여부를 파악할 수 있습니다.   
 
-        html if, else if, else 문
-        ```html
-        {% if template_variable < 20 %}
-        <p>{{ template_variable }}은 20보다 작다.</p> 
-        {% elif template_variable > 20 %}
-        <p>{{ template_variable }}은 20보다 크다.</p> 
-        {% else %}
-        <p>{{ template_variable }}은 20이다.</p> 
-        {% endif %}
-        ```
-        <br>
+      bcrypt는 언어와 상관 없이 다 통상적으로 사용되니 이해하시면 편합니다.   
+      </details>
+      <br>
+    
+    * <details>
+      <summary>JWT</summary>
+      <br>
 
-        html for 문
-        ```
-        {% for row in rows %}
-        {% set gu_name = row.MSRSTE_NM %}
-        {% set gu_mise = row.IDEX_MVL %}
-        <li>{{ gu_name }}: {{ gu_mise }}</li>
-        {% endfor %}
-        ```
-        <br>
-
-        dictionary for 문
-        ```
-        <ul>
-        {% for key, value in template_dict.items() %}
-        <li>{{ key }} : {{ value }}</li>
-        {% endfor%}
-        </ul>
-        ```
-        <br>
+      ## JWT
 
       * [JWT에 대한 연구](https://www.youtube.com/watch?v=e-_tsR0hVLQ&t=130s)
+      * [JWT에 대한 연구2](https://zzsza.github.io/development/2019/03/04/auth-with-flask/)
+      * [JWT의 구조가 잘 설명된 곳](https://mangkyu.tistory.com/56)   
+      <br>
+
+      저희의 경우 2번째 블로그를 많이 참고 하였습니다.   
+
+      JWT의 경우 회원 로그인이 완료되면 front에 보내는 토큰입니다.   
+      JWT는 header,payload,signature로 이루어져 있습니다.   
+
+      위의 3번째 링크에서 더 정확한 확인이 가능하니 여기에서는 간략하게 요약해드리면   
+      header는 토큰의 정의, payload는 토큰의 내용, signature는 토큰의 암호입니다.   
+
+      저희가 사용한 `import jwt`의 경우 header와 signature는 자동으로 생성합니다.   
+      그럼으로 payload만 정의하면 됩니다.   
+
+      또한 jwt를 만들기 위해서 SECRET KEY와 ALGORITHM도 줘야 합니다.   
+      app 내부에 정의합시다.   
+      ```python
+      app = Flask(__name__)
+      app.config['SECRET_KEY'] = '452325d3c00449738b52eab18c63edf7'
+      app.config['ALGORITHM'] = 'HS256'
+      ```
+ 
+      그래서    
+      ```python
+      payload = {
+            "sub": user_email,
+            "exp": datetime.utcnow() + timedelta(seconds=60 * 60 * 24)
+      }
+
+      # payload와 우리의 SECRET_KEY를 ALGORITHM을 통해 jwt를 만듭니다.
+      token = jwt.encode(payload, app.config["SECRET_KEY"], app.config['ALGORITHM'])
+      return {"res":token}
+      ```
+      간단하죠?   
+
+      마지막으로 토큰을 받아서 유효성을 따지려면
+      ```python
+      # jwt 토큰이 유효한지 확인   
+      payload = jwt.decode(recieved_token, app.config["SECRET_KEY"], app.config['ALGORITHM'])
+      # 유효하지 않으면 payload는 None으로 나옵니다.
+      ```   
+
+      위에서 `payload`에서 저장한 `sub`, `exp`도 받을 수 있습니다. 
+      ```python
+      payload["sub"]
+      payload["exp"]
+      ```
+
       </details>
       <br>
 

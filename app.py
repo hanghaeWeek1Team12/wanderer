@@ -383,19 +383,6 @@ def delete_place():
 if __name__ == "__main__":
     app.run('0.0.0.0', port=5000, debug=True)
 
-# 연습장
-# 임의의 패스워드?
-password = b"password"
-# bcrypt에서 소금을 뿌려줍니다.
-salt = bcrypt.gensalt()
-# password 와 소금을 이용하여 hashed를 만듭니다.
-hashed = bcrypt.hashpw(password, salt)
-# 위에 만들어진 hashed가 일치하는지 확인합니다.
-if bcrypt.checkpw(password, hashed):
-    print("match")
-else:
-    print("does not match")
-
 
 # project wanderer pip installer
 # pip install pymongo
